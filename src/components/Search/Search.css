@@ -1,0 +1,42 @@
+.Search {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  &-header {
+    color: fuchsia;
+  }
+}
+ input{
+ 	padding-top: 0px;
+ }
+
+.SearchAndSort{
+	padding-top: 25px;
+}
+
+.ListItem{
+	display: flex;
+    justify-content: left;
+    padding-left: 280px;
+}
+
+.ListItemImg{
+	width: 150px;
+  height: 200px;
+}
+
+.list{
+  text-align: left;
+}
+
+.search_container{
+  height: 100%;
+  margin-top: 30px;
+  border-right: 1px solid grey;
+}
+.search_btn{
+  margin-top: 60%;
+}

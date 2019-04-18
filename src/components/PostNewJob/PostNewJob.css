@@ -1,0 +1,27 @@
+.Item{
+  display: flex;
+  width: 100%;
+  padding: 10px;
+  justify-content: center;
+}
+
+.Inputs{
+  width: 300px;
+}
+
+.wrapper{
+  width: 100%;
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Description{
+  width: 300px;
+}
+
+.Button{
+  width: 300px;
+  text-align: center;
+}

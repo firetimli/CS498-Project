@@ -1,0 +1,75 @@
+.account_container{
+  margin-top: 30px;
+}
+
+._Account{
+  display: block;
+}
+
+._Resume{
+  display: none;
+}
+
+._Password{
+  display: none;
+}
+
+._LogOut{
+  display: none;
+}
+
+._Upload{
+  display: none;
+}
+
+._Stats{
+  display: none;
+}
+
+.account_row{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  padding: 5px;
+  height: 45px;
+}
+
+.account_row h4{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.account_row p{
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+.account_input{
+  display: flex;
+  margin-left: auto;
+  margin-right: 40%;
+}
+
+.account_btn{
+  margin-left: auto;
+  margin-right: auto;
+  width: 50px;
+  margin-top: 5px;
+}
+
+.password_input{
+  display: flex;
+  margin-left: auto;
+  margin-right: 40%;
+}
+
+.password_btn{
+  margin-left: auto;
+  margin-right: auto;
+  width: 50px;
+  margin-top: 5px;
+}
+
+.logout_btn{
+  margin-top: 100px;
+}

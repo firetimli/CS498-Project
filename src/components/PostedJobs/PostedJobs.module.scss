@@ -1,0 +1,71 @@
+.ModalView{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.JobsGalleryContainer{
+    padding: 26px 45px;
+    font-size: 20px;
+}
+
+.JobDescription{
+    text-align: left;
+    padding-left: 8px;
+    height: 100px;
+}
+
+.Row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.closeModalButton{
+    float: left;
+}
+
+.modalJobTitle{
+    padding-left: 560px;
+    float: left;
+}
+
+.deleteJobButton{
+  display: flex;
+  justify-content: center;
+}
+
+.viewResumeButton{ 
+    margin-left: auto;
+    margin-right: 10%;
+}
+
+.deleteResumeButton{
+    margin-left: auto;
+    margin-right: 10%;
+}
+/*.ModalImgSection{
+    display: flex;
+    justify-content: center;
+}
+
+.ModalTextSection{
+    padding-left: 20px;
+    padding-right: 15px;
+}
+
+.ModalTextSection h3{
+    text-align: center;
+}
+
+.CheckboxStyle{
+    font-size: 100px;
+}*/
