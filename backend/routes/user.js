@@ -14,5 +14,17 @@ module.exports = function (router) {
       res.status(200).json({"ret":ret});
     });
   });
+
+  router.put('/user/:id', function(req, res) {
+    var id = req.params.id;
+
+    User.findOneAndUpdate({ _id: req.params.id }, {$set: req.body}, {new: true})
+    .then((ret) => {
+      console.log(ret);
+      res.status(200).json({"ret":ret});
+    });
+
+  });
+
   return router;
 }

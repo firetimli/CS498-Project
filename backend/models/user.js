@@ -13,7 +13,8 @@ var UserSchema = mongoose.Schema({
   size: { type: Number},
   isRecruiter: { type: Boolean},
   starredJobSeekers: [{type: String}],
-  postedJobs: [{type: String}]
+  postedJobs: [{type: String}],
+  resume_url: {type: String}
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);
