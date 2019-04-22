@@ -1,0 +1,59 @@
+$textarea_border_radius: 6px;
+.signupPage {
+  #logo {
+    display: block;
+    margin: auto;
+    margin-bottom: 0px;
+  }
+  .signupBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .signupContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      textarea {
+        height: 44px;
+        width: 300px;
+        resize: none;
+        border: 0px;
+        line-height:40px;
+        outline: none;
+        border-radius:2px;
+        font-size: 1em;
+        text-indent:15px;
+        overflow:hidden;
+      }
+      textarea::placeholder {
+        font-size: 1em;
+      }
+      #signupUsername {
+        border-top-left-radius: $textarea_border_radius;
+        border-top-right-radius: $textarea_border_radius;
+      }
+      #signupPassword {
+        border-top: 1px solid lightgray;
+      }
+      #signupPassword2 {
+        border-top: 1px solid lightgray;
+      }
+      #signupEmail {
+        border-top: 1px solid lightgray;
+        border-bottom-left-radius: $textarea_border_radius;
+        border-bottom-right-radius: $textarea_border_radius;
+      }
+      #signupnow {
+        margin-top: 20px;
+      }
+      #back {
+        margin-top: 10px;
+      }
+    }
+    #signupmessage {
+      margin-top: 10px;
+      color: #FF4500;
+    }
+  }
+}

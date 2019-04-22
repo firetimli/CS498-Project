@@ -9,41 +9,31 @@ import PostedJobs from '../PostedJobs/PostedJobs.jsx';
 import PostNewJob from '../PostNewJob/PostNewJob.jsx';
 import Search from '../Search/Search.jsx';
 import Account from '../Account/Account.jsx';
-import User from '../User/User.jsx'
+import User from '../User/User.jsx';
+
+import LoginAndSignUp from './MainPage.js';
+import Login from './login.js';
+import Signup from './signup.js';
+import Recruiter from './Recruiter.js';
+
 
 class App extends Component {
-  state = { activeItem: 'bio' }
-
-  handleItemClick = (e, { name }) => this.setState({ activeItem: name })
-
   render() {
     return (
-      <div className="App">
-        <h3 class="ui block header">Resume Search Engine</h3>
-
+      <Router basename={process.env.PUBLIC_URL}>
         <div>
-          <Router>
-            <Button.Group>
-              <Button class="MainMenuOptions" size='large'><Link to={"/"}>Posted Jobs</Link></Button>
-              <Button class="MainMenuOptions"><Link to={"/addnewjob"}>Post New Jobs</Link></Button>
-              <Button class="MainMenuOptions"><Link to={"/search"}>Search</Link></Button>
-              <Button class="MainMenuOptions"><Link to={"/account"}>My Account</Link></Button>
-            </Button.Group>
+          
+          <Switch>
+            <Route exact path={"/login"} component={LoginAndSignUp} />
+            <Route exact path={"/signup"} component={Signup} />
+            <Route path="/recruiter" component={ Recruiter } />
 
-            <Switch>
-              <Route exact path={"/"} component={PostedJobs} />
-              <Route exact path={"/addnewjob"} component={PostNewJob} />
-              <Route exact path={"/search"} component={Search} />
-              <Route exact path={"/account"} component={Account} />
-              <Route exact path={"/user"} component={User} />
-
-            </Switch>
-          </Router>
+          </Switch>
         </div>
-
-      </div>
+      </Router>     
     );
   }
+
 }
 
 export default App;

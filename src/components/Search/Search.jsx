@@ -1,10 +1,11 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
-import { Dropdown, Menu} from 'semantic-ui-react'
-import "./Search.css"
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { Dropdown, Menu} from 'semantic-ui-react';
+import "./Search.css";
+
+import ResumeModal from '../PostedJobs/ResumeModal.jsx';
 
 class Search extends Component {
-
   viewResume(e){
     console.log("-----view resume backend code here-----");
   }
@@ -26,13 +27,12 @@ class Search extends Component {
     SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco", 
                           "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
                           "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
-
   };
 
   onChange = (e) => {
-    var idx = e.target.value
+    var idx = e.target.value;
     this.setState({SelectedJob:this.state.JobList[idx]});
-    console.log(this.state.SelectedJob.description)
+    console.log(this.state.SelectedJob.description);
   }
 
   render() {
@@ -75,11 +75,11 @@ class Search extends Component {
               <div class="internally divided twelve wide column">
                   <div class="ui very relaxed divided list">
                     {
-                      this.state.SelectedJob.starredResumes.map(resume => (
+                      this.state.SelectedJob.starredResumes.map((resume, resumeIndex) => (
                         <div class="item">
                           <div class="middle aligned content">
                             {resume.JS_name} &nbsp;&nbsp; {resume.location} &nbsp;&nbsp; {resume.score}
-                            <button class="ui right floated button" onClick={(e) => this.viewResume(e)}>
+                            <button class="ui right floated button" onClick={(e) => this.openResumeModal(e, resumeIndex)}>
                               <i class="icon user"></i>
                               View Resume
                             </button>
@@ -99,6 +99,8 @@ class Search extends Component {
           <div className="two wide column">
           </div>
 
+          <ResumeModal isShow={this.state.showModal} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext}>
+          </ResumeModal>
         </div>
       )
   }

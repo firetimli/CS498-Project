@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactModal from 'react-modal';
 import { Icon } from 'semantic-ui-react';
-import {closeModalButton, modalJobTitle, ResumeModalImgSection, starIcon} from './PostedJobs.module.scss'
+import {closeModalButton, modalJobTitle, ResumeModalImgSection, starIcon, starResumeButton} from './PostedJobs.module.scss'
 
 
 class ResumeModal extends Component {
@@ -31,8 +31,15 @@ class ResumeModal extends Component {
 
             <div className={ResumeModalImgSection}>
                 <button onClick={findPrev} onKeyDown={this.handleKeyDown}>&#10094;</button>
-                <img style={{width:1200, height:1500}} src={src.JS_resumeLink}/>
+                <img style={{width:1100, height:1500}} src={src.JS_resumeLink}/>
                 <button onClick={findNext} onKeyDown={this.handleKeyDown}>&#10095;</button>
+            </div>
+
+            <div className={starResumeButton}>
+              <button class="ui right floated button">
+                <i class="icon star"></i>
+                Star Resume
+              </button>
             </div>
 
         </ReactModal>
