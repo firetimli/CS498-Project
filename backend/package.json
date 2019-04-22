@@ -17,6 +17,7 @@
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "express-session": "^1.14.2",
+    "formidable": "^1.2.1",
     "fs": "0.0.1-security",
     "install": "^0.12.2",
     "mongoose": "^5.4.20",
