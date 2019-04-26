@@ -13,7 +13,7 @@ class Login extends Component {
 
   state =  {
     base_api_url: 'http://localhost:5000/api/',
-    username: 'szhou42',
+    username: 'uofiszhou42',
     password: 'zhixing1996',
     message: ''
   }
@@ -29,7 +29,12 @@ class Login extends Component {
         console.log(response);
         if(response.data.is_authenticated == "true") {
           console.log("Already loggedin");
-          window.location.href = "http://localhost:3000/recruiter";
+          if(response.data.userObj.userType == 'recruiter') {
+            window.location.href = "http://localhost:3000/recruiter";
+          }
+          else {
+            window.location.href = "http://localhost:3000/jobseeker";
+          }
         }
         else {
           console.log("Not loggedin");
@@ -41,20 +46,23 @@ class Login extends Component {
   }
 
   login = (username, password) => {
-    var obj = this;
-    axios.post(`${this.state.base_api_url}login`, {
-      username: username,
-      password: password
-    })
-    .then(function (response) {
-      // Server redirect cannot be done because we're using different server for frontend and backend
-      window.location.href = "http://localhost:3000/recruiter";
-      console.log(response);
-    })
-    .catch(function (error) {
-      console.log(error);
-      obj.setState({message : 'Username or password is incorrect'})
-    });
+
+    //axios.defaults.withCredentials = true;
+    axios.post('http://localhost:5000/api/login', {username:username, password:password})
+      .then(function (response) {
+        //window.location.href = "http://localhost:3000/";
+        console.log(response);
+
+        if(response.data.userObj.userType == 'recruiter') {
+          window.location.href = "http://localhost:3000/recruiter";
+        }
+        else {
+          window.location.href = "http://localhost:3000/jobseeker";
+        }
+      })
+      .catch(function (error) {
+          console.log(error);
+      });
   }
 
   usernameOnChange = (event) => {

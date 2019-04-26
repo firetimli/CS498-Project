@@ -7,6 +7,11 @@ var passport = require('passport');
 module.exports = function (router) {
   router.post('/job', function(req, res) {
     // Fill in dateCreated, createdUser based on session
+    console.log('user: ');
+    console.log(req.user);
+    req.body.createdUser = req.user.username;
+    req.body.numStars = 0;
+
     Job.create(req.body)
     .then((ret) => {
       console.log(`job... ${ret}`);
@@ -25,7 +30,9 @@ module.exports = function (router) {
     options.skip = typeof(req.query.skip) != 'undefined' ? JSON.parse(req.query.skip) : "";
     options.limit = typeof(req.query.limit) != 'undefined' ? JSON.parse(req.query.limit) : "";
 
-    Job.find(where, select, options)
+    var current_username = req.user.username;
+    console.log('get jobs posted by ' + current_username);
+    Job.find({createdUser:current_username})
     .then((ret) => {
       console.log(`job... ${ret}`);
       res.status(200).json({"ret":ret});

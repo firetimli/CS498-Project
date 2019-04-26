@@ -36,7 +36,12 @@ class User extends Component {
       var card_id = "_" + id;
       var card6 = document.getElementById(card_id);
       card6.style.display = "block";
-    };
+  };
+
+  onClickUpdate = (event) => {
+    console.log('update clicked');
+
+  };
 
   render(){
 
@@ -89,7 +94,7 @@ class User extends Component {
                 <p>Re-enter Password:</p><input placeholder="Input..." className="password_input"></input>
               </div>
               <div className = "password_btn">
-                <button className="ui basic button">Update</button>
+                <button className="ui basic button" onClick = {this.onClickUpdate}>Update</button>
               </div>
               </div>
 

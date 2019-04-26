@@ -72,7 +72,7 @@ class Account extends Component {
   }
 
   UpdateInfo = (e) => {
-    console.log(this.state.Company)
+    console.log("update info")
   }
 
   UpdatePassword = (e) => {
