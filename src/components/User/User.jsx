@@ -46,6 +46,8 @@ class User extends Component {
   render(){
 
         return (
+          <div className="App">
+          <h3 class="ui block header">Resume Search Engine</h3>
           <div className="ui grid">
             <div className="two wide column account_container">
             </div>
@@ -111,6 +113,7 @@ class User extends Component {
 
             <div className="two wide column account_container">
             </div>
+        </div>
         </div>
 
         )
