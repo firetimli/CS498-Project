@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu} from 'semantic-ui-react';
 import "./Search.css";
-
+import axios from 'axios';
 import ResumeModal from '../PostedJobs/ResumeModal.jsx';
 
 class Search extends Component {
@@ -15,17 +15,17 @@ class Search extends Component {
   }
 
   state = {
-    JobList :[{"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco", 
-                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
+    JobList :[{"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
+                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                       "starredNumber":10, "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
-              {"id":1,"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles", 
-                      "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"], 
+              {"id":1,"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles",
+                      "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"],
                       "starredNumber": 23, "starredResumes":[{"score":0.20, "JS_name":"Peter", "JS_resumeLink":"222.com"}]},
-              {"id":2,"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago", 
-                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
+              {"id":2,"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago",
+                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                       "starredNumber":16, "starredResumes":[{"score":0.13, "JS_name":"Ali", "JS_resumeLink":"333.com"}]} ],
-    SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco", 
-                          "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
+    SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
+                          "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                           "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
   };
 
@@ -33,6 +33,19 @@ class Search extends Component {
     var idx = e.target.value;
     this.setState({SelectedJob:this.state.JobList[idx]});
     console.log(this.state.SelectedJob.description);
+  }
+
+  componentDidMount() {
+    axios.defaults.withCredentials = true;
+    axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
+
+      this.setState({
+        JobList: response.data.ret
+      });
+
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {
