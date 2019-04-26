@@ -4,7 +4,13 @@ var User = require('../models/user')
 
 module.exports = function (router) {
   router.get('/is_authenticated', function(req, res) {
-      res.json({"is_authenticated" : req.isAuthenticated().toString()});
+      if(req.isAuthenticated()) {
+        u = req.user;
+      }
+      else {
+        u = null;
+      }
+      res.json({"userObj":u, "is_authenticated" : req.isAuthenticated().toString()});
     }
   );
   return router;

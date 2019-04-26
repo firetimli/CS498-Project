@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Dropdown, Menu} from 'semantic-ui-react'
+import axios from 'axios';
 import './PostNewJob.css'
 
 class PostNewJob extends Component {
@@ -12,7 +13,7 @@ class PostNewJob extends Component {
   }
 
  onChange = (e) => {
-    console.log(e.target.id)
+    console.log(e.target.id);
     if(e.target.id == "1"){
       this.setState({Title: e.target.value})
     }
@@ -25,11 +26,28 @@ class PostNewJob extends Component {
     if(e.target.id == "4"){
       this.setState({Description: e.target.value})
     }
-    // this.setState({Title:e.target.value})
   }
 
  onClick = () => {
-   // make job post
+   var endDate = new Date(this.state.EndDate);
+   console.log(endDate);
+
+   axios.post('http://localhost:5000/api/job',
+   {
+     title:this.state.Title,
+     location:this.state.Location,
+     description:this.state.Description,
+     endDate: this.state.EndDate,
+     dateCreated: new Date()
+   }, {withCredentials: true})
+   .then(function (response) {
+     //window.location.href = "http://localhost:3000/";
+     console.log(response);
+
+     })
+     .catch(function (error) {
+         console.log(error);
+     });
  }
   render() {
 
@@ -68,7 +86,7 @@ class PostNewJob extends Component {
                   type="text"
                   placeholder="Enter Job Description"
                   rows="10"
-                  id = "4" onChange = {this.onChange.bind(this, 4)}
+                  id = "4" onChange = {this.onChange.bind(this)}
                 />
             </form>
           </div>

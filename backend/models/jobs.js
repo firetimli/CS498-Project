@@ -3,13 +3,14 @@ var mongoose = require('mongoose');
 
 // Define our user schema
 var JobSchema = new mongoose.Schema({
-    name: String,
+    title: String,
     description: String,
     location: String,
-    createdUser: {type: String},
     endDate: { type: Date },
     dateCreated: { type: Date },
-    relevantJobSeekers: [{type: String}]
+    createdUser: {type: String},
+    relevantJobSeekers: [{type: String}],
+    numStars: {type: Number}
 });
 
 // Export the Mongoose model
