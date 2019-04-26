@@ -34,7 +34,6 @@ class Recruiter extends Component {
               <Route exact path={"/addnewjob"} component={PostNewJob} />
               <Route exact path={"/search"} component={Search} />
               <Route exact path={"/account"} component={Account} />
-              <Route exact path={"/user"} component={User} />
 
             </Switch>
           </Router>
