@@ -22,7 +22,7 @@ module.exports = function (router) {
   });
 
   router.get('/job', function(req, res) {
-    //console.log("skip: " + (typeof(req.query.skip) != 'undefined' ? req.query.skip:""));
+    console.log("getting jobs..");
     var options = {};
     var where = typeof(req.query.where) != 'undefined' ? JSON.parse(req.query.where) : {};
     var select = typeof(req.query.select) != 'undefined' ? JSON.parse(req.query.select) : {};

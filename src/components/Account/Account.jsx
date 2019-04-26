@@ -46,7 +46,20 @@ class Account extends Component {
         console.log(error);
       });
   }
+
+  logoutOnClick = (event) => {
+    axios.get('http://localhost:5000/api/logout', {withCredentials: true})
+      .then(function (response) {
+        console.log(response);
+        window.location.href = "http://localhost:3000/login";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+
   onClick = (id) =>{
+
     var elem1 = document.getElementById(this.state.ids[0]);
     var elem2 = document.getElementById(this.state.ids[1]);
     var elem3 = document.getElementById(this.state.ids[2]);
@@ -126,6 +139,17 @@ class Account extends Component {
       alert("Re-enter password wrong");
       return;
     }
+
+    axios.post('http://localhost:5000/api/change_password', {
+      oldpassword: this.state.OldPassword,
+      newpassword: this.state.NewPassword,
+    }, {withCredentials: true})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+
+      });
   }
 
   render() {
@@ -193,7 +217,7 @@ class Account extends Component {
 
             <div className="_LogOut" id="_LogOut">
               <div className = "logout_btn">
-                <button className="ui basic blue button">LogOut</button>
+                <button className="ui basic blue button" onClick = {this.logoutOnClick}>LogOut</button>
               </div>
             </div>
           </div>
