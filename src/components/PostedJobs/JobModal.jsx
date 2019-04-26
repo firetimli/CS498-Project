@@ -96,21 +96,21 @@ class JobModal extends Component {
               <div class="internally divided nine wide column">
                 <div class="ui very relaxed divided list">
                   {
-                    src.starredResumes.map((resume, resumeIndex) => (
-                      <div class="item">
-                        <div class="middle aligned content">
-                          {resume.JS_name} &nbsp;&nbsp; {resume.location}
-                          <button class="ui right floated button" onClick={(e) => this.openResumeModal(e, resumeIndex)}>
-                            <i class="icon user"></i>
-                            View Resume
-                          </button>
-                          <button class="ui right floated button" onClick={(e) => this.deleteResume(e)}>
-                            <i class="icon trash"></i>
-                            Delete Resume
-                          </button>
+                      src.starredResumes.map((resume, resumeIndex) => (
+                        <div class="item">
+                          <div class="middle aligned content">
+                            {resume.JS_name} &nbsp;&nbsp; {resume.location}
+                            <button class="ui right floated button" onClick={(e) => this.openResumeModal(e, resumeIndex)}>
+                              <i class="icon user"></i>
+                              View Resume
+                            </button>
+                            <button class="ui right floated button" onClick={(e) => this.deleteResume(e)}>
+                              <i class="icon trash"></i>
+                              Delete Resume
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    ))
+                      ))
                   }
                       
 

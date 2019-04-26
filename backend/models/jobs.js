@@ -10,7 +10,8 @@ var JobSchema = new mongoose.Schema({
     dateCreated: { type: Date },
     createdUser: {type: String},
     relevantJobSeekers: [{type: String}],
-    numStars: {type: Number}
+    numStars: {type: Number},
+    starredResumes: [{JS_name: {type:String}, JS_resumeLink: {type:String}}]
 });
 
 // Export the Mongoose model
