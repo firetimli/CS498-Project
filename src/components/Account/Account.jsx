@@ -23,12 +23,12 @@ class Account extends Component {
 
   componentWillMount() {
     axios.defaults.withCredentials = true;
-
+    var obj = this;
     axios.get('http://localhost:5000/api/user', {withCredentials: true})
       .then(function (response) {
         console.log('user profile');
         console.log(response);
-        this.setState(
+        obj.setState(
         {
             Name:response.data.ret.name,
             Email:response.data.ret.email,
@@ -38,7 +38,8 @@ class Account extends Component {
             Type:response.data.ret.type,
             Size:response.data.ret.size,
             userid: response.data.ret._id
-          });
+        });
+        console.log(obj.state);
       })
       .catch(function (error) {
         console.log('user profile err');
@@ -98,7 +99,7 @@ class Account extends Component {
 
   UpdateInfo = (e) => {
     console.log("update info")
-    axios.put(`http://localhost:5000/api/user${this.state.userid}`,
+    axios.put(`http://localhost:5000/api/user`,
     {
       name: this.state.Name,
       email: this.state.Email,
@@ -118,10 +119,12 @@ class Account extends Component {
 
   UpdatePassword = (e) => {
     if(this.state.OldPassword === this.state.NewPassword){
-      alert("Old password and new password cannot be the same")
+      alert("Old password and new password cannot be the same");
+      return;
     }
     if(this.state.NewPassword !== this.state.ReTypePassword){
-      alert("Re-enter password wrong")
+      alert("Re-enter password wrong");
+      return;
     }
   }
 
@@ -154,19 +157,19 @@ class Account extends Component {
               <h4>Email: {this.state.Email}</h4>
             </div>
             <div className = "account_row">
-              <h4>Company:</h4><input placeholder="input..." className="account_input" id="Company" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Company:</h4><input value={this.state.Company} placeholder="input..." className="account_input" id="Company" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Industry:</h4><input placeholder="input..." className="account_input" id="Industry" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Industry:</h4><input value={this.state.Industry} placeholder="input..." className="account_input" id="Industry" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Location:</h4><input placeholder="input..." className="account_input" id="Location" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Location:</h4><input value={this.state.Location} placeholder="input..." className="account_input" id="Location" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Type:</h4><input placeholder="input..." className="account_input" id="Type" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Type:</h4><input value={this.state.Type} placeholder="input..." className="account_input" id="Type" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Size:</h4><input placeholder="input..." className="account_input" id="Size" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Size:</h4><input value={this.state.Size} placeholder="input..." className="account_input" id="Size" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_btn">
               <button className="ui basic button" onClick = {this.UpdateInfo}>Update</button>

@@ -17,7 +17,8 @@ module.exports = function (router) {
 
   router.put('/user', function(req, res) {
     var id = req.user._id
-
+    console.log('put user');
+    console.log(req.body);
     User.findOneAndUpdate({ _id: id }, {$set: req.body}, {new: true})
     .then((ret) => {
       console.log(ret);
