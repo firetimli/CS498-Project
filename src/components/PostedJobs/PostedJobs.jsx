@@ -74,7 +74,7 @@ class PostedJobs extends Component {
             </div>
             <p></p>
             <div class={JD}>
-              {this.state.jobsData[index].description[0]+"..."}
+              {JSON.stringify(this.state.jobsData[index].description).split(".")[0]+"..."}
             </div>
           </div>
           <div class="extra content">
@@ -91,7 +91,8 @@ class PostedJobs extends Component {
   }
 
   openModal(e, index) {
-    this.setState({ selectedJobIndex: index, showModal: true });
+
+        this.setState({ selectedJobIndex: index, showModal: true });
   }
 
   closeModal(e) {
