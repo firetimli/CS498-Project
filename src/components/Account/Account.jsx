@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Dropdown, Menu} from 'semantic-ui-react'
 import "./Account.css"
+import axios from 'axios';
 
 class Account extends Component {
   state = {
@@ -16,10 +17,34 @@ class Account extends Component {
     Size : '',
     OldPassword:'',
     NewPassword : '',
-    ReTypePassword : ''
+    ReTypePassword : '',
+    userid: ''
   }
 
+  componentWillMount() {
+    axios.defaults.withCredentials = true;
 
+    axios.get('http://localhost:5000/api/user', {withCredentials: true})
+      .then(function (response) {
+        console.log('user profile');
+        console.log(response);
+        this.setState(
+        {
+            Name:response.data.ret.name,
+            Email:response.data.ret.email,
+            Company:response.data.ret.company,
+            Industry:response.data.ret.industry,
+            Location:response.data.ret.location,
+            Type:response.data.ret.type,
+            Size:response.data.ret.size,
+            userid: response.data.ret._id
+          });
+      })
+      .catch(function (error) {
+        console.log('user profile err');
+        console.log(error);
+      });
+  }
   onClick = (id) =>{
     var elem1 = document.getElementById(this.state.ids[0]);
     var elem2 = document.getElementById(this.state.ids[1]);
@@ -73,6 +98,22 @@ class Account extends Component {
 
   UpdateInfo = (e) => {
     console.log("update info")
+    axios.put(`http://localhost:5000/api/user${this.state.userid}`,
+    {
+      name: this.state.Name,
+      email: this.state.Email,
+      company: this.state.Company,
+      industry: this.state.Industry,
+      location: this.state.location,
+      type: this.state.Type,
+      size: this.state.Size
+    }, {withCredentials: true})
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   UpdatePassword = (e) => {
