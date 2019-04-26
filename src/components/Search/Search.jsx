@@ -6,27 +6,58 @@ import "./Search.css";
 import ResumeModal from '../PostedJobs/ResumeModal.jsx';
 
 class Search extends Component {
-  viewResume(e){
-    console.log("-----view resume backend code here-----");
+
+  openResumeModal = (e) => {
+    this.setState({ selectedResumeIndex: e.target.value, showModal: true });
+    console.log(this.state.showModal)
   }
+
+  closeResumeModal = (e) => {
+    if (e !== undefined) {
+      e.preventDefault();
+    }
+    this.setState({ selectedResumeIndex: null, showModal: false});
+  }
+
+  findResumePrev = (e) => {
+    if (e !== undefined) {
+      e.preventDefault();
+    }
+    this.setState(prevState => ({
+      selectedResumeIndex: prevState.selectedResumeIndex - 1 }));
+    console.log(this.state.selectedResumeIndex)
+    console.log(this.state.showModal)
+  }
+
+  findResumeNext = (e) => {
+    if (e !== undefined) {
+      e.preventDefault();
+    }
+    this.setState(prevState => ({
+      selectedResumeIndex: prevState.selectedResumeIndex + 1 }));
+    console.log(this.state.selectedResumeIndex)
+    console.log(this.state.showModal)
+  }
+
 
   deleteResume(e) {
-    console.log("-----delete resume backend code here-----");
+      console.log("-----delete resume backend code here-----");
   }
-
   state = {
-    JobList :[{"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco", 
-                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
+    JobList :[{"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
+                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                       "starredNumber":10, "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
-              {"id":1,"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles", 
-                      "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"], 
+              {"id":1,"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles",
+                      "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"],
                       "starredNumber": 23, "starredResumes":[{"score":0.20, "JS_name":"Peter", "JS_resumeLink":"222.com"}]},
-              {"id":2,"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago", 
-                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
+              {"id":2,"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago",
+                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                       "starredNumber":16, "starredResumes":[{"score":0.13, "JS_name":"Ali", "JS_resumeLink":"333.com"}]} ],
-    SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco", 
-                          "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"], 
+    SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
+                          "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                           "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
+    selectedResumeIndex : 0,
+    showModal: false,
   };
 
   onChange = (e) => {
@@ -42,20 +73,20 @@ class Search extends Component {
           <div className="two wide column">
           </div>
           <div className="five wide column search_container">
-            <select class="ui search dropdown" onChange = {this.onChange.bind(this)}>
+            <select className="ui search dropdown" onChange = {this.onChange.bind(this)}>
                 {this.state.JobList.map(item =>(
                   <option value = {item.id}>{item.title}</option>
                 ))}
             </select>
 
-            <div class = "ui items">
-              <div class = "item">
-              <div class="content">
-                <p class="header">{this.state.SelectedJob.title}</p>
-                <div class="meta">
+            <div className = "ui items">
+              <div className = "item">
+              <div className="content">
+                <p className="header">{this.state.SelectedJob.title}</p>
+                <div className="meta">
                   <span>Description</span>
                 </div>
-                <div class="description">
+                <div className="description">
                   {this.state.SelectedJob.description.map(item => (
                     <li className="list">{item}</li>
                   ))}
@@ -79,11 +110,11 @@ class Search extends Component {
                         <div class="item">
                           <div class="middle aligned content">
                             {resume.JS_name} &nbsp;&nbsp; {resume.location} &nbsp;&nbsp; {resume.score}
-                            <button class="ui right floated button" onClick={(e) => this.openResumeModal(e, resumeIndex)}>
+                            <button class="ui right floated button" value = {resumeIndex} onClick={this.openResumeModal.bind(this)}>
                               <i class="icon user"></i>
                               View Resume
                             </button>
-                            <button class="ui right floated button" onClick={(e) => this.deleteResume(e)}>
+                            <button class="ui right floated button" value = {resumeIndex} onClick={this.deleteResume.bind(this)}>
                               <i class="icon trash"></i>
                               Delete Resume
                             </button>
@@ -96,10 +127,7 @@ class Search extends Component {
               </div>
           </div>
 
-          <div className="two wide column">
-          </div>
-
-          <ResumeModal isShow={this.state.showModal} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext}>
+          <ResumeModal isShow={this.state.showModal} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={this.state.SelectedJob.starredResumes[this.state.selectedResumeIndex]}>
           </ResumeModal>
         </div>
       )
