@@ -25,22 +25,22 @@ class Signup extends Component {
   }
 
   usernameOnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({username : event.target.value})
   }
 
   passwordOnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({password : event.target.value})
   }
 
   password2OnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({password2 : event.target.value});
   }
 
   emailOnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({email : event.target.value});
   }
 

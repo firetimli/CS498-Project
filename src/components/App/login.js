@@ -46,6 +46,26 @@ class Login extends Component {
   }
 
   login = (username, password) => {
+<<<<<<< HEAD
+    var obj = this;
+    console.log(username);
+    console.log(password);
+
+    axios.post(`${this.state.base_api_url}login`, {
+      username: username,
+      password: password
+    })
+    .then(function (response) {
+      // Server redirect cannot be done because we're using different server for frontend and backend
+      window.location.href = "http://localhost:3000/recruiter";
+      console.log("--------------");
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+      obj.setState({message : 'Username or password is incorrect'})
+    });
+=======
 
     //axios.defaults.withCredentials = true;
     axios.post('http://localhost:5000/api/login', {username:username, password:password})
@@ -63,6 +83,7 @@ class Login extends Component {
       .catch(function (error) {
           console.log(error);
       });
+>>>>>>> 0e0a106c7fb7f09874b9514df9a457222bb1c2a4
   }
 
   usernameOnChange = (event) => {
