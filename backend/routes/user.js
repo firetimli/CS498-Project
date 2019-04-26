@@ -5,20 +5,20 @@ var passport = require('passport');
 // Register User
 
 module.exports = function (router) {
-  router.get('/user/:id', function(req, res) {
-    var id = req.params.id;
+  router.get('/user', function(req, res) {
+    var id = req.user._id
 
-    User.findById(req.params.id)
+    User.findById(id)
     .then((ret) => {
       console.log(ret);
       res.status(200).json({"ret":ret});
     });
   });
 
-  router.put('/user/:id', function(req, res) {
-    var id = req.params.id;
+  router.put('/user', function(req, res) {
+    var id = req.user._id
 
-    User.findOneAndUpdate({ _id: req.params.id }, {$set: req.body}, {new: true})
+    User.findOneAndUpdate({ _id: id }, {$set: req.body}, {new: true})
     .then((ret) => {
       console.log(ret);
       res.status(200).json({"ret":ret});
