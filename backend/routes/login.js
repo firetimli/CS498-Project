@@ -9,7 +9,9 @@ module.exports = function (router) {
       console.log("someone tries to login....");
       console.log(req.user);
       req.login(req.user, function(err) {
-        if (err) { return next(err); }
+        console.log("-----get here 1------");
+        if (err) { console.log(err); return next(err); }
+        console.log("-----get here 2------");
         return res.status(200).send(req.user);
       });
     }

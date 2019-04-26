@@ -42,6 +42,9 @@ class Login extends Component {
 
   login = (username, password) => {
     var obj = this;
+    console.log(username);
+    console.log(password);
+
     axios.post(`${this.state.base_api_url}login`, {
       username: username,
       password: password
@@ -49,6 +52,7 @@ class Login extends Component {
     .then(function (response) {
       // Server redirect cannot be done because we're using different server for frontend and backend
       window.location.href = "http://localhost:3000/recruiter";
+      console.log("--------------");
       console.log(response);
     })
     .catch(function (error) {
