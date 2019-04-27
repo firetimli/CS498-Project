@@ -27,20 +27,31 @@ class Search extends Component {
     SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
                           "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                           "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
+    description_list: []
   };
 
   onChange = (e) => {
     var idx = e.target.value;
-    this.setState({SelectedJob:this.state.JobList[idx]});
-    console.log(this.state.SelectedJob.description);
+    console.log('idx is ')
+    console.log(idx)
+    var templist = this.state.JobList[idx].description.split('.').filter((item) => {
+      return item != "";
+    });
+    this.setState({
+      SelectedJob: this.state.JobList[idx],
+      description_list: templist
+    });
   }
 
   componentDidMount() {
     axios.defaults.withCredentials = true;
     axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
-
+      //this.setState({SelectedJob: response.data.ret[0]});
+      console.log('selectedjob desc: ' + response.data.ret[0].description);
       this.setState({
-        JobList: response.data.ret
+        JobList: response.data.ret,
+        SelectedJob: response.data.ret[0],
+        description_list: response.data.ret[0].description.split('.')
       });
 
     }).catch((error) => {
@@ -56,8 +67,8 @@ class Search extends Component {
           </div>
           <div className="five wide column search_container">
             <select class="ui search dropdown" onChange = {this.onChange.bind(this)}>
-                {this.state.JobList.map(item =>(
-                  <option value = {item.id}>{item.title}</option>
+                {this.state.JobList.map((item, index) =>(
+                  <option value={index}> {item.title} </option>
                 ))}
             </select>
 
@@ -69,9 +80,10 @@ class Search extends Component {
                   <span>Description</span>
                 </div>
                 <div class="description">
-                  {this.state.SelectedJob.description.map(item => (
-                    <li className="list">{item}</li>
-                  ))}
+
+                {this.state.description_list.map(item => (
+                  <li className="list">{item}</li>
+                ))}
                 </div>
               </div>
               </div>
