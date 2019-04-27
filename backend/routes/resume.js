@@ -1,5 +1,6 @@
 var Job = require('../models/jobs')
-const formidable = require('formidable')
+
+
 
 module.exports = function (router) {
 
@@ -23,6 +24,19 @@ module.exports = function (router) {
       .on('end', () => {
         res.status(200).json({"ret":'ok'});
       })
+
+    var resumepdf = req.files.userfile;
+    var fileName = req.body.fileName;
+    // Use the mv() method to place the file somewhere on your server
+    resumepdf.mv(__dirname + '/upload/' + fileName , function(err) {
+      if(err) {
+        console.log(err);
+      }
+      else {
+        console.log("uploaded");
+      }
+    });
+
   })
 
   router.post('/deleteStarredResume', function(req, res) {
