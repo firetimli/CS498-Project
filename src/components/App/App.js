@@ -22,15 +22,17 @@ class App extends Component {
     return (
       <Router basename={process.env.PUBLIC_URL}>
         <div>
-          
-          <Switch>
-            <Route exact path={"/login"} component={LoginAndSignUp} />
-            <Route exact path={"/signup"} component={Signup} />
-            <Route path="/recruiter" component={ Recruiter } />
-            <Route path={"/jobseeker"} component={User} />
-          </Switch>
+        <div className="App">
+          <h3 class="ui block header">Resume Search Engine</h3>
+            <Switch>
+              <Route exact path={"/login"} component={LoginAndSignUp} />
+              <Route exact path={"/signup"} component={Signup} />
+              <Route path="/recruiter" component={ Recruiter } />
+              <Route path={"/jobseeker"} component={User} />
+            </Switch>
         </div>
-      </Router>     
+        </div>
+      </Router>
     );
   }
 

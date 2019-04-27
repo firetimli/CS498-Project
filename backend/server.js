@@ -37,12 +37,17 @@ app.use(bodyParser.json());
 
 
 // Express Session
-app.use(session({
-  secret: 'secret',
-  resave: true,
-  saveUninitialized: true,
-  cookie: { secure: false, maxAge: 60000 }
-}));
+app.use( session( { secret: 'keyboard cat',
+                    cookie: {
+                      httpOnly: true,
+                      maxAge: 60*60*1000
+                    },
+                    rolling: true,
+                    resave: true,
+                    saveUninitialized: false
+                  }
+         )
+);
 
 // Passport init
 app.use(passport.initialize());

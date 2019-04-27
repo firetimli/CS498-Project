@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Dropdown, Menu} from 'semantic-ui-react';
 import "./Search.css";
-
+import axios from 'axios';
 import ResumeModal from '../PostedJobs/ResumeModal.jsx';
 
 class Search extends Component {
@@ -64,6 +64,19 @@ class Search extends Component {
     var idx = e.target.value;
     this.setState({SelectedJob:this.state.JobList[idx]});
     console.log(this.state.SelectedJob.description);
+  }
+
+  componentDidMount() {
+    axios.defaults.withCredentials = true;
+    axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
+
+      this.setState({
+        JobList: response.data.ret
+      });
+
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   render() {

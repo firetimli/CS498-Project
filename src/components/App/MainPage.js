@@ -16,7 +16,6 @@ class LoginAndSignUp extends Component {
   render() {
     return (
       <div className="App">
-        <h3 class="ui block header">Resume Search Engine</h3>
 
         <div>
             <Router>

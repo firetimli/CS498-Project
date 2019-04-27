@@ -30,18 +30,37 @@ class PostedJobs extends Component {
     this.renderOneJob = this.renderOneJob.bind(this);
   }
 
+
+/*
   componentWillMount() {
     axios.defaults.withCredentials = true;
+    console.log("---------ready to get job---------");
     axios.get('http://localhost:5000/api/job', {withCredentials: true})
       .then(function (response) {
 
+        console.log("---------got response---------");
+        console.log(response.data.ret);
+        console.log("---------loading data---------");
         this.setState({jobsData: response.data.ret});
-        console.log("new jobsData");
-        console.log(this.state.jobsData);
+        console.log("---------finish loading data---------");
       })
       .catch(function (error) {
 
       });
+  }
+*/
+
+  componentDidMount() {
+    axios.defaults.withCredentials = true;
+    axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
+
+      this.setState({
+        jobsData: response.data.ret
+      });
+
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   renderOneJob(src, index) {
@@ -55,7 +74,7 @@ class PostedJobs extends Component {
             </div>
             <p></p>
             <div class={JD}>
-              {this.state.jobsData[index].description[0]+"..."}
+              {JSON.stringify(this.state.jobsData[index].description).split(".")[0]+"..."}
             </div>
           </div>
           <div class="extra content">
@@ -72,7 +91,8 @@ class PostedJobs extends Component {
   }
 
   openModal(e, index) {
-    this.setState({ selectedJobIndex: index, showModal: true });
+
+        this.setState({ selectedJobIndex: index, showModal: true });
   }
 
   closeModal(e) {
@@ -113,23 +133,6 @@ class PostedJobs extends Component {
         <JobModal isShow={this.state.showModal} closeModal={this.closeModal} findPrev={this.findPrev} findNext={this.findNext} src={this.state.jobsData[this.state.selectedJobIndex]}>
         </JobModal>
       </div>
-
-/* ANOTHER WAY TO RENDER: USER React.createElement
-      React.createElement("div", { className: GalleryContainer },
-      React.createElement("div", { className: Modals },
-
-      this.state.moviesData.map(this.renderImageContent)),
-
-      React.createElement(GalleryModal, {
-        isShow: this.state.showModal,
-        closeModal: this.closeModal,
-        findPrev: this.findPrev,
-        findNext: this.findNext,
-        hasPrev: this.state.selectedMovieIndex > 0,
-        hasNext: this.state.selectedMovieIndex + 1 < this.state.moviesData.length,
-        src: this.state.moviesData[this.state.selectedMovieIndex] })
-      )
-*/
 
     );
   }
