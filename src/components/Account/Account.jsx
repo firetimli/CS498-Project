@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { Dropdown, Menu} from 'semantic-ui-react'
 import "./Account.css"
+import axios from 'axios';
 
 class Account extends Component {
   state = {
@@ -16,11 +17,49 @@ class Account extends Component {
     Size : '',
     OldPassword:'',
     NewPassword : '',
-    ReTypePassword : ''
+    ReTypePassword : '',
+    userid: ''
   }
 
+  componentWillMount() {
+    axios.defaults.withCredentials = true;
+    var obj = this;
+    axios.get('http://localhost:5000/api/user', {withCredentials: true})
+      .then(function (response) {
+        console.log('user profile');
+        console.log(response);
+        obj.setState(
+        {
+            Name:response.data.ret.name,
+            Email:response.data.ret.email,
+            Company:response.data.ret.company,
+            Industry:response.data.ret.industry,
+            Location:response.data.ret.location,
+            Type:response.data.ret.type,
+            Size:response.data.ret.size,
+            userid: response.data.ret._id
+        });
+        console.log(obj.state);
+      })
+      .catch(function (error) {
+        console.log('user profile err');
+        console.log(error);
+      });
+  }
+
+  logoutOnClick = (event) => {
+    axios.get('http://localhost:5000/api/logout', {withCredentials: true})
+      .then(function (response) {
+        console.log(response);
+        window.location.href = "http://localhost:3000/login";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
 
   onClick = (id) =>{
+
     var elem1 = document.getElementById(this.state.ids[0]);
     var elem2 = document.getElementById(this.state.ids[1]);
     var elem3 = document.getElementById(this.state.ids[2]);
@@ -73,15 +112,44 @@ class Account extends Component {
 
   UpdateInfo = (e) => {
     console.log("update info")
+    axios.put(`http://localhost:5000/api/user`,
+    {
+      name: this.state.Name,
+      email: this.state.Email,
+      company: this.state.Company,
+      industry: this.state.Industry,
+      location: this.state.location,
+      type: this.state.Type,
+      size: this.state.Size
+    }, {withCredentials: true})
+    .then(function (response) {
+      console.log(response);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
   }
 
   UpdatePassword = (e) => {
     if(this.state.OldPassword === this.state.NewPassword){
-      alert("Old password and new password cannot be the same")
+      alert("Old password and new password cannot be the same");
+      return;
     }
     if(this.state.NewPassword !== this.state.ReTypePassword){
-      alert("Re-enter password wrong")
+      alert("Re-enter password wrong");
+      return;
     }
+
+    axios.post('http://localhost:5000/api/change_password', {
+      oldpassword: this.state.OldPassword,
+      newpassword: this.state.NewPassword,
+    }, {withCredentials: true})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+
+      });
   }
 
   render() {
@@ -113,19 +181,19 @@ class Account extends Component {
               <h4>Email: {this.state.Email}</h4>
             </div>
             <div className = "account_row">
-              <h4>Company:</h4><input placeholder="input..." className="account_input" id="Company" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Company:</h4><input value={this.state.Company} placeholder="input..." className="account_input" id="Company" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Industry:</h4><input placeholder="input..." className="account_input" id="Industry" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Industry:</h4><input value={this.state.Industry} placeholder="input..." className="account_input" id="Industry" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Location:</h4><input placeholder="input..." className="account_input" id="Location" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Location:</h4><input value={this.state.Location} placeholder="input..." className="account_input" id="Location" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Type:</h4><input placeholder="input..." className="account_input" id="Type" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Type:</h4><input value={this.state.Type} placeholder="input..." className="account_input" id="Type" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_row">
-              <h4>Size:</h4><input placeholder="input..." className="account_input" id="Size" onChange = {this.InputOnChange.bind(this)}></input>
+              <h4>Size:</h4><input value={this.state.Size} placeholder="input..." className="account_input" id="Size" onChange = {this.InputOnChange.bind(this)}></input>
             </div>
             <div className = "account_btn">
               <button className="ui basic button" onClick = {this.UpdateInfo}>Update</button>
@@ -149,7 +217,7 @@ class Account extends Component {
 
             <div className="_LogOut" id="_LogOut">
               <div className = "logout_btn">
-                <button className="ui basic blue button">LogOut</button>
+                <button className="ui basic blue button" onClick = {this.logoutOnClick}>LogOut</button>
               </div>
             </div>
           </div>

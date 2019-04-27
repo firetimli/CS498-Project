@@ -53,7 +53,7 @@ class Login extends Component {
         //window.location.href = "http://localhost:3000/";
         console.log(response);
 
-        if(response.data.userObj.userType == 'recruiter') {
+        if(response.data.userType == 'recruiter') {
           window.location.href = "http://localhost:3000/recruiter";
         }
         else {
@@ -61,8 +61,10 @@ class Login extends Component {
         }
       })
       .catch(function (error) {
+          console.log('login err')
           console.log(error);
       });
+
   }
 
   usernameOnChange = (event) => {

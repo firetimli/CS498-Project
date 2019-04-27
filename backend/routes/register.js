@@ -8,12 +8,21 @@ module.exports = function (router) {
     var password = req.body.password;
     var password2 = req.body.password2;
 
+    console.log('signup info');
+    console.log(req.body);
+
     if (password == password2){
       var newUser = new User({
         name: req.body.name,
         email: req.body.email,
         username: req.body.username,
-        password: req.body.password
+        password: req.body.password,
+        userType: req.body.userType,
+        company: '',
+        Industry: '',
+        location: '',
+        type: '',
+        size: 0
       });
 
       User.createUser(newUser, function(err, user){

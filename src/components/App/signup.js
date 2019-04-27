@@ -24,39 +24,23 @@ class Signup extends Component {
 
   }
 
-  signup = (username, password) => {
-    var obj = this;
-    axios.post(`${this.state.base_api_url}signup`, {
-      username: username,
-      password: password
-    })
-    .then(function (response) {
-      // Server redirect cannot be done because we're using different server for frontend and backend
-      window.location.href = "http://localhost:3000/recruiter";
-      console.log(response);
-    })
-    .catch(function (error) {
-      obj.setState({message : 'Username or password is incorrect'})
-    });
-  }
-
   usernameOnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({username : event.target.value})
   }
 
   passwordOnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({password : event.target.value})
   }
 
   password2OnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({password2 : event.target.value});
   }
 
   emailOnChange = (event) => {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     this.setState({email : event.target.value});
   }
 
@@ -65,14 +49,14 @@ class Signup extends Component {
     this.setState({userType : event.target.value});
   }
 
-  signup = (username, password, password2, email, type) => {
+  signup = (username, password, password2, email, userType) => {
     var obj = this;
     axios.post(`${this.state.base_api_url}register`, {
       username: username,
       password: password,
       password2: password2,
       email: email,
-      type: type
+      userType: userType
     })
     .then(function (response) {
       // Server redirect cannot be done because we're using different server for frontend and backend
