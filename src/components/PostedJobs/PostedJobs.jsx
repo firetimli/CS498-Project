@@ -11,17 +11,7 @@ class PostedJobs extends Component {
     this.state = {
       showModal: false,
       selectedJobIndex: null,
-      jobsData:[{"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
-                 "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
-                 "numStars":10, "starredResumes":[{"JS_name":"Alex", "JS_resumeLink": "https://www.w3schools.com/images/w3schools_green.jpg", "location":"Los Angeles"},
-                  {"JS_name":"Mary", "JS_resumeLink": "https://s3-us-west-2.amazonaws.com/s.cdpn.io/29841/dog.jpg", "location":"Chicago"},
-                  {"JS_name":"Mary", "JS_resumeLink": "http://portfolio.charleskdesigns.com/wp-content/uploads/2019/04/001.jpg", "location":"Boston"}]},
-                  {"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles",
-                  "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"],
-                  "numStars": 23, "starredResumes":[{"JS_name":"Peter", "JS_resumeLink":"222.com"}]},
-                  {"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago",
-                  "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
-                  "numStars":16, "starredResumes":[{"JS_name":"Mary", "JS_resumeLink":"333.com"}]} ]
+      jobsData:[]
     };
 
     this.closeModal = this.closeModal.bind(this);

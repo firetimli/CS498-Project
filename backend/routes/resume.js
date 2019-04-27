@@ -6,7 +6,6 @@ module.exports = function (router) {
   router.post('/resume', (req, res) => {
     console.log('Got a resume request');
 
-
     new formidable.IncomingForm().parse(req)
       .on('fileBegin', function (name, file){
         file.path = __dirname + '/uploads/' + file.name;
@@ -25,6 +24,43 @@ module.exports = function (router) {
         res.status(200).json({"ret":'ok'});
       })
   })
+
+  router.post('/deleteStarredResume', function(req, res) {
+    // Fill in dateCreated, createdUser based on session
+    console.log(req.body.link);
+    console.log(req.body.id);
+
+    Job.findById(req.body.id)
+    .then((foundJob) => {
+      console.log(foundJob);
+      // console.log(foundJob.starredResumes);
+      var copyOfStarredResumes = foundJob.starredResumes.slice();
+      console.log(copyOfStarredResumes);
+
+      var i = 0;
+      for(var i = 0; i < foundJob.starredResumes.length; i++){
+        resumeInfo = foundJob.starredResumes[i];
+        console.log(resumeInfo);
+        if(resumeInfo["JS_resumeLink"] == req.body.link){
+          copyOfStarredResumes.splice(i, 1);
+          break;
+        }
+      }
+
+      console.log("---------deleted resume-------");
+      console.log(copyOfStarredResumes);
+      Job.findOneAndUpdate(req.body.id, {'$set':{starredResumes: copyOfStarredResumes}})
+      .then((ret) => {
+        console.log('ok');
+      })
+      .catch((err)=> {
+        console.log('err');
+      });
+
+    });
+
+  });
+
 
   return router;
 }
