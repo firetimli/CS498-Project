@@ -122,14 +122,15 @@ class User extends Component {
 
  handleSubmit = (e) => {
    e.preventDefault();
-  const dataForm = new FormData();
-   dataForm.append('file', e.target.files[0]);
-     axios
-       .post('http://localhost:5000/api/resume', dataForm)
-       .then(res => {
+   const dataForm = new FormData();
+   dataForm.append('userfile', e.target.files[0]);
+   dataForm.append('fileName',e.target.files[0].name);
 
-       })
-       .catch(err => console.log(err));
+   axios.post('http://localhost:5000/api/resume', dataForm)
+     .then(res => {
+
+     })
+     .catch(err => console.log(err));
  }
 
   render(){

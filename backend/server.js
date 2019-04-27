@@ -9,11 +9,15 @@ var User = require('./models/user')
 var router = express.Router();
 var https = require('https');
 var fs = require('fs');
+const fileUpload = require('express-fileupload');
 
 
 const app = express();
+app.use(fileUpload());
 
 const PORT = process.env.PORT || 5000;
+
+app.use(express.static(__dirname));
 
 // Allow CORS so that backend and frontend could be put on different servers on the same host
 const cors = require('cors')
