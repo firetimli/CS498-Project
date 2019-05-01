@@ -4,12 +4,12 @@ import ReactModal from 'react-modal';
 import { Icon } from 'semantic-ui-react';
 
 import ResumeModal from './ResumeModal.jsx';
-
+import axios from 'axios';
 
 class JobModal extends Component {
   constructor(props) {
     super(props);
-    this.state = {showModal: false, selectedResumeIndex: null};
+    this.state = {showModal: false, selectedResumeIndex: null, data: null};
 
     this.closeResumeModal = this.closeResumeModal.bind(this);
     this.findResumeNext = this.findResumeNext.bind(this);
@@ -48,16 +48,24 @@ class JobModal extends Component {
   }
 
 
-  deleteJob(e) {
+  deleteJob(e, id) {
     console.log("-----delete job backend code here-----");
+    axios.defaults.withCredentials = true;
+    axios.delete('http://localhost:5000/api/job/'+id, {withCredentials: true}).then((response) => {
+      window.location.href = "http://localhost:3000/recruiter";
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
-  viewResume(e){
-    console.log("-----view resume backend code here-----");
-  }
-
-  deleteResume(e) {
+  deleteResume(e, jobID, resumeLink) {
     console.log("-----delete resume backend code here-----");
+    console.log(jobID);
+    console.log(resumeLink);
+    axios.post('http://localhost:5000/api/deleteStarredResume', {link:resumeLink, id: jobID}).then((response) => {
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   componentDidMount() {
@@ -82,10 +90,10 @@ class JobModal extends Component {
 
             <div class="ui internally celled four column grid">
               <div class="seven wide column">
-                  <p>Location: {src.location}</p>
-                  <p>End Date: {src.endDate}</p>
-                  <p>Description: {src.description}</p>
-                  <div className={deleteJobButton} onClick={(e) => this.deleteJob(e)}>
+                  <p><strong>Location</strong>: {src.location}</p>
+                  <p><strong>End Date</strong>: {src.endDate.substring(0, 10)}</p>
+                  <p><strong>Description</strong>: {src.description}</p>
+                  <div className={deleteJobButton} onClick={(e) => this.deleteJob(e, src._id)}>
                     <button class="ui centered basic button">
                       <i class="trash icon"></i>
                       Delete This Job
@@ -104,7 +112,7 @@ class JobModal extends Component {
                               <i class="icon user"></i>
                               View Resume
                             </button>
-                            <button class="ui right floated button" onClick={(e) => this.deleteResume(e)}>
+                            <button class="ui right floated button" onClick={(e) => this.deleteResume(e, src._id, resume.JS_resumeLink)}>
                               <i class="icon trash"></i>
                               Delete Resume
                             </button>
