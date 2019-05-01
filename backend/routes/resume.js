@@ -1,5 +1,5 @@
 var Job = require('../models/jobs')
-
+var fs = require('fs');
 
 
 module.exports = function (router) {
@@ -8,16 +8,24 @@ module.exports = function (router) {
     console.log('Got a resume request');
     var resumepdf = req.files.userfile;
     var fileName = req.body.fileName;
-    // Use the mv() method to place the file somewhere on your server
-    resumepdf.mv(__dirname + '/upload/' + fileName , function(err) {
+    console.log(fileName);
+    console.log(resumepdf);
+
+    fs.mkdir(__dirname + '/../uploads/' + req.user.username, { recursive: true }, (err) => {
+      if (err) throw err;
+    });
+
+    fs.writeFile(__dirname + '/../uploads/' + req.user.username + '/resume.pdf', resumepdf.data, function(err) {
       if(err) {
-        console.log(err);
+          return console.log(err);
       }
-      else {
-        console.log("uploaded");
-      }
+      console.log("The file was saved!");
     });
   })
 
   return router;
 }
+
+/*
+Reacher higher admin, higher than your level to pitch your ideas
+*/
