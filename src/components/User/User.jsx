@@ -39,11 +39,21 @@ class User extends Component {
               email:response.data.ret.email
           });
           console.log(obj.state);
+
+          console.log(response.data.ret._id);
+          axios.post('http://localhost:5000/api/getRecentStarredNumber', {id: response.data.ret._id})
+          .then((response) => {
+
+          }).catch((error) => {
+            console.log(error);
+          });
         })
         .catch(function (error) {
           console.log('user profile err');
           console.log(error);
         });
+
+
     }
 
   logoutOnClick = (event) => {
@@ -206,9 +216,7 @@ class User extends Component {
               };
 
         return (
-          <div className="App">
 
-          <h3 class="ui block header">Resume Search Engine</h3>
           <div className="ui grid">
             <div className="two wide column account_container">
             </div>
@@ -276,7 +284,6 @@ class User extends Component {
 
             <div className="two wide column account_container">
             </div>
-        </div>
         </div>
 
         )

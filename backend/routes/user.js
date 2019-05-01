@@ -15,6 +15,7 @@ module.exports = function (router) {
     });
   });
 
+
   router.put('/user', function(req, res) {
     var id = req.user._id
     console.log('put user');
@@ -24,6 +25,19 @@ module.exports = function (router) {
       console.log(ret);
       res.status(200).json({"ret":ret});
     });
+
+
+  router.post('/getRecentStarredNumber', function(req, res) {
+    var id = req.body.id;
+    console.log("---------get star number-------");
+    console.log(id);
+
+    User.find(id, {starredJobSeekers: { "$in" : [req.params.id]} } ) 
+    .then((ret) => {
+      console.log(ret);
+    });
+  });
+
 
   });
 
