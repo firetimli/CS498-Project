@@ -71,7 +71,8 @@ class JobModal extends Component {
 
   componentWillMount() {
     // const {isShow, closeModal, findNext, findPrev, src } = this.props;
-    console.log("----------got src--------");
+    console.log("----------print props--------");
+    console.log(this.props)
     // console.log(this.props);
     axios.post('http://localhost:5000/api/getStarredUsers', {currentJob: this.props.src})
       .then((response) => {
@@ -80,7 +81,7 @@ class JobModal extends Component {
         console.log(error);
       });
   }
- 
+
   componentDidMount() {
     document.body.addEventListener('keydown', this.handleKeyDown);
   }
@@ -139,7 +140,7 @@ class JobModal extends Component {
                         </div>
                       ))
                   }
-                      
+
 
                   </div>
               </div>

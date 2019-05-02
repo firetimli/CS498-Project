@@ -112,6 +112,11 @@ class PostedJobs extends Component {
 
   render() {
 
+    let jobmodal;
+    if(this.state.showModal) {
+      jobmodal = <JobModal isShow={this.state.showModal} closeModal={this.closeModal} findPrev={this.findPrev} findNext={this.findNext} src={this.state.jobsData[this.state.selectedJobIndex]} > </JobModal>
+    }
+    
     return (
       <div>
         <div className={JobsGalleryContainer}>
@@ -120,10 +125,9 @@ class PostedJobs extends Component {
             </div>
         </div>
 
-      
         {console.log(this.state.jobsData[this.state.selectedJobIndex])}
-        <JobModal isShow={this.state.showModal} closeModal={this.closeModal} findPrev={this.findPrev} findNext={this.findNext} src={this.state.jobsData[this.state.selectedJobIndex]} >
-        </JobModal>
+
+        {jobmodal}
       </div>
 
     );
