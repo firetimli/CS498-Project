@@ -40,7 +40,7 @@ class PostedJobs extends Component {
   }
 */
 
-  componentDidMount() {
+  componentWillMount() {
     axios.defaults.withCredentials = true;
     axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
 
@@ -120,7 +120,9 @@ class PostedJobs extends Component {
             </div>
         </div>
 
-        <JobModal isShow={this.state.showModal} closeModal={this.closeModal} findPrev={this.findPrev} findNext={this.findNext} src={this.state.jobsData[this.state.selectedJobIndex]}>
+      
+        {console.log(this.state.jobsData[this.state.selectedJobIndex])}
+        <JobModal isShow={this.state.showModal} closeModal={this.closeModal} findPrev={this.findPrev} findNext={this.findNext} src={this.state.jobsData[this.state.selectedJobIndex]} >
         </JobModal>
       </div>
 

@@ -9,6 +9,7 @@ import axios from 'axios';
 class JobModal extends Component {
   constructor(props) {
     super(props);
+
     this.state = {showModal: false, selectedResumeIndex: null, data: null};
 
     this.closeResumeModal = this.closeResumeModal.bind(this);
@@ -68,6 +69,18 @@ class JobModal extends Component {
     });
   }
 
+  componentWillMount() {
+    // const {isShow, closeModal, findNext, findPrev, src } = this.props;
+    console.log("----------got src--------");
+    // console.log(this.props);
+    axios.post('http://localhost:5000/api/getStarredUsers', {currentJob: this.props.src})
+      .then((response) => {
+        console.log(response);
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
+ 
   componentDidMount() {
     document.body.addEventListener('keydown', this.handleKeyDown);
   }
@@ -78,7 +91,13 @@ class JobModal extends Component {
       return null;
     }
 
+    for(var i in src.starredResumes){
+      var starredUserID = src.starredResumes[i];
+      console.log(starredUserID);
+    }
+
     console.log(src);
+
     return (
         <ReactModal isOpen={isShow}>
             <div class="ui four column grid">

@@ -73,7 +73,14 @@ module.exports = function (router) {
     .then((ret) => {
       res.status(200).json({"starredUsers": ret});
     });
+  });
 
+  router.post('/getStarredUsers', function(req, res) {
+    var id = req.body.currentJob;
+    console.log("---------get starred id list-------");
+    console.log(req.body.currentJob);
+
+    
   });
 
   return router;
