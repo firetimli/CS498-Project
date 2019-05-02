@@ -1,4 +1,5 @@
-var Job = require('../models/jobs')
+var Job = require('../models/jobs');
+var User = require('../models/user')
 var passport = require('passport');
 //var isLoggedIn = require('./utils/auth');
 
@@ -49,6 +50,11 @@ module.exports = function (router) {
     });
   });
 
+  router.get('/test', function(req, res){
+    console.log("connected");
+    return res.status(200).json({'ss':'ss'})
+  });
+
   router.delete('/job/:id', function (req, res) {
     var id = req.params.id;
 
@@ -56,6 +62,18 @@ module.exports = function (router) {
     .then((err, removed_job) => {
       res.status(200).json({"ret": removed_job});
     });
+  });
+
+  router.post('/getRecentStarredNumber', function(req, res) {
+    var id = req.body.id;
+    console.log("---------get star number-------");
+    console.log(req.body.id);
+
+    User.find({ starredJobSeekers: { $in : [req.body.id]} }  ) 
+    .then((ret) => {
+      res.status(200).json({"starredUsers": ret});
+    });
+
   });
 
   return router;

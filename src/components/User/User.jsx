@@ -43,6 +43,40 @@ class User extends Component {
           console.log(response.data.ret._id);
           axios.post('http://localhost:5000/api/getRecentStarredNumber', {id: response.data.ret._id})
           .then((response) => {
+            // console.log(response.data);
+            obj.setState({"starredNumber": response.data.starredUsers.length});
+            var starredRecruiters = response.data.starredUsers;
+            var industries = {};
+            for(var i = 0; i < starredRecruiters.length; i++){
+              console.log(starredRecruiters[i].industry);
+              if(industries[starredRecruiters[i].industry] == undefined){
+                industries[starredRecruiters[i].industry]= 1.0;
+              }
+              else{
+                industries[starredRecruiters[i].industry] += 1.0;
+              }
+            }
+            console.log(industries);
+            var numberOfIndustries = 0.0;
+            for(var indu in industries){
+              numberOfIndustries += industries[indu];
+            }
+            console.log(numberOfIndustries);
+
+            for(var indu in industries){
+              industries[indu] /= numberOfIndustries;
+            }
+            console.log(industries);
+
+            var industriesData = [];
+            for(var indu in industries){
+              industriesData.push({name: indu, y: industries[indu]});
+            }
+            console.log(industriesData);
+            // console.log(typeof(industriesData));
+
+            obj.setState({"starredIndustries": industriesData});
+
 
           }).catch((error) => {
             console.log(error);
@@ -185,7 +219,7 @@ class User extends Component {
             type: 'pie'
           },
           title: {
-            text: 'Company Industry'
+            text: 'Company Industry Distribution'
           },
           tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -203,15 +237,7 @@ class User extends Component {
           series: [{
             name: 'Industry',
             colorByPoint: true,
-            data: [{
-                name: 'Chrome',
-                y: 1/3,
-                sliced: true,
-                selected: true
-              },{
-                  name: 'FireFox',
-                  y: 2/3
-                }]
+            data: this.state.starredIndustries
                 }]
               };
 
@@ -270,7 +296,7 @@ class User extends Component {
               </div>
 
               <div className="ui segment _Stats" id="_Stats">
-                 <HighchartsReact highcharts={Highcharts} options={StarOptions}/>
+                 <h3>Resume Starred Number: {this.state.starredNumber}</h3>
                  <HighchartsReact highcharts={Highcharts} options={PieOptions}/>
 
               </div>

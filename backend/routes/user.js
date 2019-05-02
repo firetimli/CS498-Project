@@ -27,17 +27,6 @@ module.exports = function (router) {
     });
 
 
-  router.post('/getRecentStarredNumber', function(req, res) {
-    var id = req.body.id;
-    console.log("---------get star number-------");
-    console.log(id);
-
-    User.find(id, {starredJobSeekers: { "$in" : [req.params.id]} } ) 
-    .then((ret) => {
-      console.log(ret);
-    });
-  });
-
 
   });
 
