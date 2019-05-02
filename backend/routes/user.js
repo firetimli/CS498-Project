@@ -25,9 +25,7 @@ module.exports = function (router) {
       console.log(ret);
       res.status(200).json({"ret":ret});
     });
-
-
-
+    
   });
 
   return router;

@@ -39,6 +39,24 @@ class Search extends Component {
     console.log(this.state.showModal)
   }
 
+  searchOnClick = (event) => {
+    console.log("Search clicked " + typeof(this.state.SelectedJob.description));
+
+    //var joinedJobDescription = this.state.SelectedJob.description.join("");
+    var obj = this;
+    axios.post('http://localhost:5000/api/search', {jobDescription: obj.state.SelectedJob.description}, {withCredentials: true})
+      .then(function (response) {
+        console.log('user profiles');
+        console.log(response);
+        obj.setState({
+          relevantUsers: response.data.ret
+        });
+      })
+      .catch(function (error) {
+        console.log('user profile err');
+        console.log(error);
+      });
+  }
 
   deleteResume(e) {
       console.log("-----delete resume backend code here-----");
@@ -57,6 +75,7 @@ class Search extends Component {
                           "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
                           "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
     description_list: [],
+    relevantUsers:[],
     selectedResumeIndex : 0,
     showModal: false,
   };
@@ -121,7 +140,7 @@ class Search extends Component {
             </div>
 
             <div className = "search_btn">
-              <button className="ui basic blue button">Search</button>
+              <button className="ui basic blue button" onClick = {this.searchOnClick}>Search</button>
             </div>
 
 
@@ -131,17 +150,13 @@ class Search extends Component {
               <div class="internally divided twelve wide column">
                   <div class="ui very relaxed divided list">
                     {
-                      this.state.SelectedJob.starredResumes.map((resume, resumeIndex) => (
+                      this.state.relevantUsers.map((user, userIndex) => (
                         <div class="item">
                           <div class="middle aligned content">
-                            {resume.JS_name} &nbsp;&nbsp; {resume.location} &nbsp;&nbsp; {resume.score}
-                            <button class="ui right floated button" value = {resumeIndex} onClick={this.openResumeModal.bind(this)}>
+                            {user.username} &nbsp;&nbsp; {user.location} &nbsp;&nbsp; {user.score}
+                            <button class="ui right floated button" value = {userIndex} onClick={this.openResumeModal.bind(this)}>
                               <i class="icon user"></i>
                               View Resume
-                            </button>
-                            <button class="ui right floated button" value = {resumeIndex} onClick={this.deleteResume.bind(this)}>
-                              <i class="icon trash"></i>
-                              Delete Resume
                             </button>
                           </div>
                         </div>

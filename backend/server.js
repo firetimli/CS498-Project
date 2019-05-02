@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 var passport = require('passport');
 var db = require('./utils/db');
 var User = require('./models/user')
@@ -14,6 +15,7 @@ const fileUpload = require('express-fileupload');
 
 const app = express();
 app.use(fileUpload());
+
 
 const PORT = process.env.PORT || 5000;
 
@@ -40,18 +42,21 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 
+
 // Express Session
 app.use( session( { secret: 'keyboard cat',
                     cookie: {
                       httpOnly: true,
                       maxAge: 60*60*1000
                     },
+                    store: new MongoStore({ mongooseConnection: db }),
                     rolling: true,
                     resave: true,
                     saveUninitialized: false
                   }
          )
 );
+
 
 // Passport init
 app.use(passport.initialize());

@@ -22,7 +22,8 @@ module.exports = function (router) {
         Industry: '',
         location: '',
         type: '',
-        size: 0
+        size: 0,
+        resume_text: ''
       });
 
       User.createUser(newUser, function(err, user){
