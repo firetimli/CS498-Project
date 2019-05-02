@@ -7,6 +7,25 @@ import ResumeModal from '../PostedJobs/ResumeModal.jsx';
 
 class Search extends Component {
 
+  state = {
+    JobList :[{"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
+                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
+                      "starredNumber":10, "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
+              {"id":1,"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles",
+                      "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"],
+                      "starredNumber": 23, "starredResumes":[{"score":0.20, "JS_name":"Peter", "JS_resumeLink":"222.com"}]},
+              {"id":2,"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago",
+                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
+                      "starredNumber":16, "starredResumes":[{"score":0.13, "JS_name":"Ali", "JS_resumeLink":"333.com"}]} ],
+    SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
+                          "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
+                          "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
+    description_list: [],
+    relevantUsers:[],
+    selectedResumeIndex : 0,
+    showModal: false,
+  };
+
   openResumeModal = (e) => {
     this.setState({ selectedResumeIndex: e.target.value, showModal: true });
     console.log(this.state.showModal)
@@ -20,23 +39,17 @@ class Search extends Component {
   }
 
   findResumePrev = (e) => {
-    if (e !== undefined) {
-      e.preventDefault();
-    }
-    this.setState(prevState => ({
-      selectedResumeIndex: prevState.selectedResumeIndex - 1 }));
-    console.log(this.state.selectedResumeIndex)
-    console.log(this.state.showModal)
+    let prevIndex = Math.max(0, this.state.selectedResumeIndex - 1);
+    console.log('-----prev clicked-----')
+    console.log(prevIndex)
+    this.setState({selectedResumeIndex: prevIndex });
   }
 
   findResumeNext = (e) => {
-    if (e !== undefined) {
-      e.preventDefault();
-    }
-    this.setState(prevState => ({
-      selectedResumeIndex: prevState.selectedResumeIndex + 1 }));
-    console.log(this.state.selectedResumeIndex)
-    console.log(this.state.showModal)
+    let nextIndex = Math.min(this.state.relevantUsers.length - 1, this.state.selectedResumeIndex + 1);
+    console.log('-----next clicked-----')
+    console.log(nextIndex)
+    this.setState({selectedResumeIndex: nextIndex });
   }
 
   searchOnClick = (event) => {
@@ -61,24 +74,6 @@ class Search extends Component {
   deleteResume(e) {
       console.log("-----delete resume backend code here-----");
   }
-  state = {
-    JobList :[{"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
-                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
-                      "starredNumber":10, "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
-              {"id":1,"title":"Product Manager", "endDate":"June 1 2019", "location":"Los Angeles",
-                      "description": ["Strong knowledge of common back-end Web technologies (such as Ruby on Rails, Python, etc) in a production environment", "An ability to balance a sense of urgency with shipping high quality and pragmatic solutions"],
-                      "starredNumber": 23, "starredResumes":[{"score":0.20, "JS_name":"Peter", "JS_resumeLink":"222.com"}]},
-              {"id":2,"title":"Senior Software Engineer", "endDate":"May 20 2019", "location":"Chicago",
-                      "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
-                      "starredNumber":16, "starredResumes":[{"score":0.13, "JS_name":"Ali", "JS_resumeLink":"333.com"}]} ],
-    SelectedJob : {"id":0,"title":"Software Engineer", "endDate":"May 10 2019", "location":"San Francisco",
-                          "description": ["Experience working with a large codebase on a cross functional team", "Strong knowledge of SQL, Bachelor’s degree in Computer Science, computer engineering, electrical engineering OR equivalent work experience"],
-                          "starredNumber":10,  "starredResumes":[{"score":0.25, "JS_name":"Alex", "JS_resumeLink": "111.com", "location":"Los Angeles"}, {"score":0.18, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Chicago"}, {"score":0.15, "JS_name":"Mary", "JS_resumeLink": "111.com", "location":"Boston"}]},
-    description_list: [],
-    relevantUsers:[],
-    selectedResumeIndex : 0,
-    showModal: false,
-  };
 
   onChange = (e) => {
     var idx = e.target.value;
@@ -110,6 +105,10 @@ class Search extends Component {
   }
 
   render() {
+    let resumemodal;
+    if(this.state.showModal) {
+        resumemodal = <ResumeModal isShow={true} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={this.state.relevantUsers[this.state.selectedResumeIndex]}> </ResumeModal>
+    }
 
       return (
         <div className = "ui grid">
@@ -167,8 +166,7 @@ class Search extends Component {
               </div>
           </div>
 
-          <ResumeModal isShow={this.state.showModal} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={this.state.SelectedJob.starredResumes[this.state.selectedResumeIndex]}>
-          </ResumeModal>
+          {resumemodal}
         </div>
       )
   }
