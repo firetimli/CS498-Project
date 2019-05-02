@@ -32,10 +32,14 @@ module.exports = function (router) {
     console.log("---------get star number-------");
     console.log(id);
 
-    User.find(id, {starredJobSeekers: { "$in" : [req.params.id]} } ) 
+    User.find(id, {starredJobSeekers: { "$in" : [req.params.id]} } )
     .then((ret) => {
       console.log(ret);
     });
+  });
+
+  router.get('/testendpoint', function(req, res) {
+    res.status(200).json({"ret":'ok'});
   });
 
 

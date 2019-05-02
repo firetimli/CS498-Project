@@ -14,7 +14,7 @@ var UserSchema = mongoose.Schema({
   isRecruiter: { type: Boolean},
   starredJobSeekers: [{type: String}],
   postedJobs: [{type: String}],
-  resume_url: {type: String},
+  resume_text: {type: String},
   userType: {type: String}
 });
 
