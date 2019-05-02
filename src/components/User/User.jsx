@@ -69,8 +69,14 @@ class User extends Component {
             console.log(industries);
 
             var industriesData = [];
+            var firstPiece = true;
             for(var indu in industries){
-              industriesData.push({name: indu, y: industries[indu]});
+              if(firstPiece == true){
+                industriesData.push({name: indu, y: industries[indu], sliced: true, selected: true});
+                firstPiece = false;
+              }else{
+                industriesData.push({name: indu, y: industries[indu]});
+              }
             }
             console.log(industriesData);
             // console.log(typeof(industriesData));
