@@ -27,7 +27,7 @@ def search():
     # req.jobDescription, req.resumes
     results = compareJDWithResumes(jobDescription, resumes)
     indices = [r[2] for r in results]
-    indices = indices[:10]
+    indices = indices[:5]
     #results = compareJDWithResumes(req.jobDescription, req.resumes)
     print(results)
     print(indices)
