@@ -97,5 +97,23 @@ module.exports = function (router) {
     });
   });
 
+  router.post('/starResume', function(req, res) {
+    var job = req.body.job;
+    var user = req.body.starredUser;
+    console.log("---------get user/job id------");
+    console.log(job);
+    console.log(user);
+
+    var mongoose = require('mongoose');
+    console.log(mongoose.Types.ObjectId(job._id));
+
+    Job.findOneAndUpdate({ _id: mongoose.Types.ObjectId(job._id) }, {$push: {starredResumes: user._id}})
+    .then((ret) => {
+      console.log(ret);
+      res.status(200).json({"ret": "success"});
+    });
+  });
+
+
   return router;
 }

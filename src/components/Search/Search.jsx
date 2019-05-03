@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Dropdown, Menu} from 'semantic-ui-react';
 import "./Search.css";
 import axios from 'axios';
-import ResumeModal from '../PostedJobs/ResumeModal.jsx';
+import SearchResumeModal from '../PostedJobs/SearchResumeModal.jsx';
 
 class Search extends Component {
 
@@ -107,7 +107,7 @@ class Search extends Component {
   render() {
     let resumemodal;
     if(this.state.showModal) {
-        resumemodal = <ResumeModal isShow={true} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={this.state.relevantUsers[this.state.selectedResumeIndex]}> </ResumeModal>
+        resumemodal = <SearchResumeModal isShow={true} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={this.state.relevantUsers[this.state.selectedResumeIndex]} job={this.state.SelectedJob}> </SearchResumeModal>
     }
 
       return (
