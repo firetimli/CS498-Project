@@ -59,29 +59,38 @@ class JobModal extends Component {
     });
   }
 
-  deleteResume(e, jobID, resumeLink) {
+  deleteResume(e, jobID, userid) {
     console.log("-----delete resume backend code here-----");
     console.log(jobID);
-    console.log(resumeLink);
-    axios.post('http://localhost:5000/api/deleteStarredResume', {link:resumeLink, id: jobID}).then((response) => {
+    console.log(userid);
+    var obj = this;
+    axios.post('http://localhost:5000/api/deleteStarredResume', {jobid:jobID, userid: userid})
+    .then((response) => {
+      obj.pullStarredUsers();
     }).catch((error) => {
       console.log(error);
     });
   }
 
-  componentWillMount() {
+  pullStarredUsers = () => {
     // const {isShow, closeModal, findNext, findPrev, src } = this.props;
-    console.log("----------print props--------");
+    console.log("----------pulled starredResumes--------");
     console.log(this.props);
     // console.log(this.props);
-    axios.post('http://localhost:5000/api/getStarredUsers', {currentJob: this.props.src})
+    axios.post('http://localhost:5000/api/getStarredUsers', {currentJobId: this.props.src._id})
       .then((response) => {
+        console.log("----------starred users after fetching--------");
         console.log(response.data.starredUsers);
         this.setState({starredUsers: response.data.starredUsers});
         // console.log(this.state.starredUsers);
       }).catch((error) => {
+        console.log('pull error');
         console.log(error);
       });
+  }
+
+  componentWillMount() {
+    this.pullStarredUsers();
   }
 
   componentDidMount() {
@@ -142,7 +151,6 @@ class JobModal extends Component {
                         </div>
                       ))
                   }
-
 
                   </div>
               </div>
