@@ -11,6 +11,7 @@ var router = express.Router();
 var https = require('https');
 var fs = require('fs');
 const fileUpload = require('express-fileupload');
+const prod = require('utils/prod')
 
 
 const app = express();
@@ -24,7 +25,7 @@ app.use(express.static(__dirname));
 // Allow CORS so that backend and frontend could be put on different servers on the same host
 const cors = require('cors')
 const corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: prod.CLIENT_ORIGIN,
     credentials: true,
 
 }
