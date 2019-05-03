@@ -11,7 +11,8 @@ class PostedJobs extends Component {
     this.state = {
       showModal: false,
       selectedJobIndex: null,
-      jobsData:[]
+      jobsData:[],
+      relevantUsers:[],
     };
 
     this.closeModal = this.closeModal.bind(this);

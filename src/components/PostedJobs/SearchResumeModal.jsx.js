@@ -36,7 +36,7 @@ class SearchResumeModal extends Component {
     }
 
     // console.log(src);
-    let resumeUrl = `${BASE_URL_WITHOUT_API}uplodas/${src.username}/resume.pdf`
+    let resumeUrl = `${BASE_URL_WITHOUT_API}uploads/${src.username}/resume.pdf`
     return (
         <ReactModal isOpen={isShow}>
             <div class="ui four column grid">

@@ -110,8 +110,12 @@ class JobModal extends Component {
     }
 
     console.log(src);
-
+    let resumemodal;
+    if(this.state.showModal) {
+      resumemodal = <ResumeModal isShow={this.state.showModal} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={this.state.starredUsers[this.state.selectedResumeIndex]}></ResumeModal>
+    }
     return (
+
         <ReactModal isOpen={isShow}>
             <div class="ui four column grid">
               <div class="row">
@@ -157,8 +161,7 @@ class JobModal extends Component {
               </div>
             </div>
 
-          <ResumeModal isShow={this.state.showModal} closeModal={this.closeResumeModal} findPrev={this.findResumePrev} findNext={this.findResumeNext} src={src.starredResumes[this.state.selectedResumeIndex]}>
-          </ResumeModal>
+          {resumemodal}
 
         </ReactModal>
     );
