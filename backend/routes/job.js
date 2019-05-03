@@ -78,9 +78,23 @@ module.exports = function (router) {
   router.post('/getStarredUsers', function(req, res) {
     var id = req.body.currentJob;
     console.log("---------get starred id list-------");
-    console.log(req.body.currentJob);
+    // console.log(req.body.currentJob.starredResumes);
+    var users = [];
+    for(var i in req.body.currentJob.starredResumes){
+      currentResume = req.body.currentJob.starredResumes[i];
+      var userID = "";
+      for(var j in currentResume){
+        userID = userID + currentResume[j];
+      }
+      
+      users.push(userID);
+    }
+    console.log(users);
 
-    
+    User.find({ _id: { $in : users} }  ) 
+    .then((ret) => {
+      res.status(200).json({"starredUsers": ret});
+    });
   });
 
   return router;

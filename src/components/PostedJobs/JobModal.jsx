@@ -10,7 +10,7 @@ class JobModal extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {showModal: false, selectedResumeIndex: null, data: null};
+    this.state = {showModal: false, selectedResumeIndex: null, data: null, starredUsers: []};
 
     this.closeResumeModal = this.closeResumeModal.bind(this);
     this.findResumeNext = this.findResumeNext.bind(this);
@@ -72,11 +72,13 @@ class JobModal extends Component {
   componentWillMount() {
     // const {isShow, closeModal, findNext, findPrev, src } = this.props;
     console.log("----------print props--------");
-    console.log(this.props)
+    console.log(this.props);
     // console.log(this.props);
     axios.post('http://localhost:5000/api/getStarredUsers', {currentJob: this.props.src})
       .then((response) => {
-        console.log(response);
+        console.log(response.data.starredUsers);
+        this.setState({starredUsers: response.data.starredUsers});
+        // console.log(this.state.starredUsers);
       }).catch((error) => {
         console.log(error);
       });
@@ -124,15 +126,15 @@ class JobModal extends Component {
               <div class="internally divided nine wide column">
                 <div class="ui very relaxed divided list">
                   {
-                      src.starredResumes.map((resume, resumeIndex) => (
+                      this.state.starredUsers.map((user, userIndex) => (
                         <div class="item">
                           <div class="middle aligned content">
-                            {resume.JS_name} &nbsp;&nbsp; {resume.location}
-                            <button class="ui right floated button" onClick={(e) => this.openResumeModal(e, resumeIndex)}>
+                            {user.username} &nbsp;&nbsp;
+                            <button class="ui right floated button" onClick={(e) => this.openResumeModal(e, userIndex)}>
                               <i class="icon user"></i>
                               View Resume
                             </button>
-                            <button class="ui right floated button" onClick={(e) => this.deleteResume(e, src._id, resume.JS_resumeLink)}>
+                            <button class="ui right floated button" onClick={(e) => this.deleteResume(e, src._id, user._id)}>
                               <i class="icon trash"></i>
                               Delete Resume
                             </button>
