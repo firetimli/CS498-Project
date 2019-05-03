@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Dropdown, Menu} from 'semantic-ui-react'
 import "./Account.css"
 import axios from 'axios';
+import { BASE_URL} from '../../utils/prod';
 
 class Account extends Component {
   state = {
@@ -24,7 +25,7 @@ class Account extends Component {
   componentWillMount() {
     axios.defaults.withCredentials = true;
     var obj = this;
-    axios.get('http://localhost:5000/api/user', {withCredentials: true})
+    axios.get(`${BASE_URL}user`, {withCredentials: true})
       .then(function (response) {
         console.log('user profile');
         console.log(response);
