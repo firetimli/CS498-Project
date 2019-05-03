@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import ReactModal from 'react-modal';
 import { Icon } from 'semantic-ui-react';
 import {closeModalButton, modalJobTitle, ResumeModalImgSection, starIcon, starResumeButton} from './PostedJobs.module.scss'
-
+import { BASE_URL, BASE_URL_WITHOUT_API} from '../../utils/prod';
 
 class ResumeModal extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class ResumeModal extends Component {
     }
 
     console.log(src);
-    let resumeUrl = `http://localhost:5000/uploads/${src.username}/resume.pdf`
+    let resumeUrl = `${BASE_URL_WITHOUT_API}uploads/${src.username}/resume.pdf`
     return (
         <ReactModal isOpen={isShow}>
             <div class="ui four column grid">

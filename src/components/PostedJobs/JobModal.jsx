@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {MovieImg, ModalImgSection, ModalTextSection, Row, Column, closeModalButton, modalJobTitle, deleteJobButton, starIcon, viewResumeButton, deleteResumeButton} from './PostedJobs.module.scss'
 import ReactModal from 'react-modal';
 import { Icon } from 'semantic-ui-react';
+import { BASE_URL, BASE_URL_REACT} from '../../utils/prod';
 
 import ResumeModal from './ResumeModal.jsx';
 import axios from 'axios';
@@ -52,8 +53,8 @@ class JobModal extends Component {
   deleteJob(e, id) {
     console.log("-----delete job backend code here-----");
     axios.defaults.withCredentials = true;
-    axios.delete('http://localhost:5000/api/job/'+id, {withCredentials: true}).then((response) => {
-      window.location.href = "http://localhost:3000/recruiter";
+    axios.delete(`${BASE_URL}job/${id}`, {withCredentials: true}).then((response) => {
+      window.location.href = `${BASE_URL_REACT}recruiter`;
     }).catch((error) => {
       console.log(error);
     });
@@ -64,7 +65,7 @@ class JobModal extends Component {
     console.log(jobID);
     console.log(userid);
     var obj = this;
-    axios.post('http://localhost:5000/api/deleteStarredResume', {jobid:jobID, userid: userid})
+    axios.post(`${BASE_URL}deleteStarredResume`, {jobid:jobID, userid: userid})
     .then((response) => {
       obj.pullStarredUsers();
     }).catch((error) => {
@@ -77,7 +78,7 @@ class JobModal extends Component {
     console.log("----------pulled starredResumes--------");
     console.log(this.props);
     // console.log(this.props);
-    axios.post('http://localhost:5000/api/getStarredUsers', {currentJobId: this.props.src._id})
+    axios.post(`${BASE_URL}getStarredUsers`, {currentJobId: this.props.src._id})
       .then((response) => {
         console.log("----------starred users after fetching--------");
         console.log(response.data.starredUsers);

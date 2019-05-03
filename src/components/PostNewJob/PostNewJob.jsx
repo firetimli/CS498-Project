@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Dropdown, Menu} from 'semantic-ui-react'
 import axios from 'axios';
 import './PostNewJob.css'
+import { BASE_URL} from '../../utils/prod';
 
 class PostNewJob extends Component {
   state = {
@@ -32,7 +33,7 @@ class PostNewJob extends Component {
    var endDate = new Date(this.state.EndDate);
    console.log(endDate);
 
-   axios.post('http://localhost:5000/api/job',
+   axios.post(`${BASE_URL}job`,
    {
      title:this.state.Title,
      location:this.state.Location,
@@ -41,7 +42,6 @@ class PostNewJob extends Component {
      dateCreated: new Date()
    }, {withCredentials: true})
    .then(function (response) {
-     //window.location.href = "http://localhost:3000/";
      console.log(response);
 
      })

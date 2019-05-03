@@ -5,6 +5,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import './styles/LoginAndSignup.css';
+import { BASE_URL, BASE_URL_REACT} from '../../utils/prod';
 
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
@@ -12,7 +13,6 @@ import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 class Login extends Component {
 
   state =  {
-    base_api_url: 'http://localhost:5000/api/',
     username: 'uofiszhou42',
     password: 'zhixing1996',
     message: ''
@@ -24,16 +24,16 @@ class Login extends Component {
 
   componentWillMount() {
     axios.defaults.withCredentials = true;
-    axios.get('http://localhost:5000/api/is_authenticated', {withCredentials: true})
+    axios.get(`${BASE_URL}is_authenticated`, {withCredentials: true})
       .then(function (response) {
         console.log(response);
         if(response.data.is_authenticated == "true") {
           console.log("Already loggedin");
           if(response.data.userObj.userType == 'recruiter') {
-            window.location.href = "http://localhost:3000/recruiter";
+            window.location.href = `${BASE_URL_REACT}recruiter`;
           }
           else {
-            window.location.href = "http://localhost:3000/jobseeker";
+            window.location.href = `${BASE_URL_REACT}jobseeker`;
           }
         }
         else {
@@ -48,16 +48,15 @@ class Login extends Component {
   login = (username, password) => {
 
     //axios.defaults.withCredentials = true;
-    axios.post('http://localhost:5000/api/login', {username:username, password:password})
+    axios.post(`${BASE_URL}login`, {username:username, password:password})
       .then(function (response) {
-        //window.location.href = "http://localhost:3000/";
         console.log(response);
 
         if(response.data.userType == 'recruiter') {
-          window.location.href = "http://localhost:3000/recruiter";
+            window.location.href = `${BASE_URL_REACT}recruiter`;
         }
         else {
-          window.location.href = "http://localhost:3000/jobseeker";
+          window.location.href = `${BASE_URL_REACT}jobseeker`;
         }
       })
       .catch(function (error) {
@@ -82,10 +81,6 @@ class Login extends Component {
       this.setState({message : ''})
       this.login(this.state.username, this.state.password);
   }
-
-  // signupOnClick = (event) => {
-  //   window.location.href = "http://localhost:3000/signup";
-  // }
 
   render() {
     return (

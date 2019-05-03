@@ -6,12 +6,11 @@ import _ from 'lodash';
 import PropTypes from 'prop-types';
 import './styles/signup.scss';
 import './styles/LoginAndSignup.css';
-
+import { BASE_URL} from '../../utils/prod';
 
 class Signup extends Component {
 
   state =  {
-    base_api_url: 'http://localhost:5000/api/',
     username: '',
     password: '',
     password2: '',
@@ -51,7 +50,7 @@ class Signup extends Component {
 
   signup = (username, password, password2, email, userType) => {
     var obj = this;
-    axios.post(`${this.state.base_api_url}register`, {
+    axios.post(`${BASE_URL}register`, {
       username: username,
       password: password,
       password2: password2,
@@ -60,7 +59,6 @@ class Signup extends Component {
     })
     .then(function (response) {
       // Server redirect cannot be done because we're using different server for frontend and backend
-      //window.location.href = "http://localhost:3000/dashboard";
       console.log(response);
     })
     .catch(function (error) {
@@ -74,11 +72,7 @@ class Signup extends Component {
       this.setState({message : ''})
       this.signup(this.state.username, this.state.password, this.state.password2, this.state.email, this.state.userType);
   }
-
-  // backOnClick = (event) => {
-  //   window.location.href = "http://localhost:3000/login";
-  // }
-
+  
   render() {
     return (
       <div className="signupPage">

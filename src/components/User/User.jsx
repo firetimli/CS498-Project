@@ -5,6 +5,7 @@ import Highcharts from 'highcharts/highstock';
 import HighchartsReact from 'highcharts-react-official';
 import "./User.css"
 import axios from 'axios';
+import { BASE_URL, BASE_URL_REACT} from '../../utils/prod';
 
 
 class User extends Component {
@@ -29,7 +30,7 @@ class User extends Component {
   componentWillMount() {
       axios.defaults.withCredentials = true;
       var obj = this;
-      axios.get('http://localhost:5000/api/user', {withCredentials: true})
+      axios.get(`${BASE_URL}user`, {withCredentials: true})
         .then(function (response) {
           console.log('user profile');
           console.log(response);
@@ -41,7 +42,7 @@ class User extends Component {
           console.log(obj.state);
 
           console.log(response.data.ret._id);
-          axios.post('http://localhost:5000/api/getRecentStarredNumber', {id: response.data.ret._id})
+          axios.post(`${BASE_URL}getRecentStarredNumber`, {id: response.data.ret._id})
           .then((response) => {
             // console.log(response.data);
             obj.setState({"starredNumber": response.data.starredUsers.length});
@@ -97,10 +98,10 @@ class User extends Component {
     }
 
   logoutOnClick = (event) => {
-      axios.get('http://localhost:5000/api/logout', {withCredentials: true})
+      axios.get(`${BASE_URL}logout`, {withCredentials: true})
         .then(function (response) {
           console.log(response);
-          window.location.href = "http://localhost:3000/login";
+          window.location.href = `${BASE_URL_REACT}login`;
         })
         .catch(function (error) {
           console.log(error);
@@ -158,7 +159,7 @@ class User extends Component {
       return;
     }
 
-    axios.post('http://localhost:5000/api/change_password', {
+    axios.post(`${BASE_URL}change_password`, {
       oldpassword: this.state.OldPassword,
       newpassword: this.state.NewPassword,
     }, {withCredentials: true})
@@ -176,7 +177,7 @@ class User extends Component {
    dataForm.append('userfile', e.target.files[0]);
    dataForm.append('fileName',e.target.files[0].name);
 
-   axios.post('http://localhost:5000/api/resume', dataForm)
+   axios.post(`${BASE_URL}resume`, dataForm)
      .then(res => {
 
      })

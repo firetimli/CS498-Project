@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Dropdown, Menu} from 'semantic-ui-react'
 import "./Account.css"
 import axios from 'axios';
-import { BASE_URL} from '../../utils/prod';
+import { BASE_URL, BASE_URL_REACT} from '../../utils/prod';
 
 class Account extends Component {
   state = {
@@ -49,10 +49,10 @@ class Account extends Component {
   }
 
   logoutOnClick = (event) => {
-    axios.get('http://localhost:5000/api/logout', {withCredentials: true})
+    axios.get(`${BASE_URL}logout`, {withCredentials: true})
       .then(function (response) {
         console.log(response);
-        window.location.href = "http://localhost:3000/login";
+        window.location.href = `${BASE_URL_REACT}login`;
       })
       .catch(function (error) {
         console.log(error);
@@ -113,7 +113,7 @@ class Account extends Component {
 
   UpdateInfo = (e) => {
     console.log("update info")
-    axios.put(`http://localhost:5000/api/user`,
+    axios.put(`${BASE_URL}user`,
     {
       name: this.state.Name,
       email: this.state.Email,
@@ -141,7 +141,7 @@ class Account extends Component {
       return;
     }
 
-    axios.post('http://localhost:5000/api/change_password', {
+    axios.post(`${BASE_URL}change_password`, {
       oldpassword: this.state.OldPassword,
       newpassword: this.state.NewPassword,
     }, {withCredentials: true})

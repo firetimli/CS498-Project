@@ -3,6 +3,8 @@ import ReactModal from 'react-modal';
 import { Icon } from 'semantic-ui-react';
 import {closeModalButton, modalJobTitle, ResumeModalImgSection, starIcon, starResumeButton} from './PostedJobs.module.scss'
 import axios from 'axios';
+import { BASE_URL, BASE_URL_WITHOUT_API} from '../../utils/prod';
+
 
 class SearchResumeModal extends Component {
   constructor(props) {
@@ -13,7 +15,7 @@ class SearchResumeModal extends Component {
     console.log("+++++++++++");
     console.log(this.props.src._id);
     console.log(this.props.job._id);
-    axios.post('http://localhost:5000/api/starResume', {job: this.props.job, starredUser: this.props.src})
+    axios.post(`${BASE_URL}starResume`, {job: this.props.job, starredUser: this.props.src})
       .then((response) => {
       	console.log(response);
         // console.log(this.state.starredUsers);
@@ -34,7 +36,7 @@ class SearchResumeModal extends Component {
     }
 
     // console.log(src);
-    let resumeUrl = `http://localhost:5000/uploads/${src.username}/resume.pdf`
+    let resumeUrl = `${BASE_URL_WITHOUT_API}uplodas/${src.username}/resume.pdf`
     return (
         <ReactModal isOpen={isShow}>
             <div class="ui four column grid">

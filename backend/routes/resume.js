@@ -3,6 +3,7 @@ var User = require('../models/user')
 var fs = require('fs');
 const pdf = require('pdf-parse');
 const axios = require('axios')
+const prod = require('../utils/prod')
 
 module.exports = function (router) {
 
@@ -24,7 +25,7 @@ module.exports = function (router) {
 
         var jobDescription = req.body.jobDescription;
         console.log("jobDescription from frontend: " + jobDescription);
-        axios.post('http://localhost:8000/search', {jobDescription:jobDescription, resumes:resumes}).then(function (response) {
+        axios.post(`${prod.PY_SERVICE_BASE_URL}search`, {jobDescription:jobDescription, resumes:resumes}).then(function (response) {
           console.log("response from python search service:");
           console.log(response.data.data);
           var indices = response.data.data;

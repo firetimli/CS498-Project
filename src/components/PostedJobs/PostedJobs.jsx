@@ -3,7 +3,7 @@ import axios from 'axios';
 import JobModal from './JobModal.jsx';
 import { ModalView as Modals, ModalImg, JobsGalleryContainer, JobDescription as JD, JobCard} from './PostedJobs.module.scss'
 import { Card, Image, Icon } from 'semantic-ui-react';
-
+import { BASE_URL} from '../../utils/prod';
 class PostedJobs extends Component {
 
   constructor(props) {
@@ -20,29 +20,9 @@ class PostedJobs extends Component {
     this.renderOneJob = this.renderOneJob.bind(this);
   }
 
-
-/*
   componentWillMount() {
     axios.defaults.withCredentials = true;
-    console.log("---------ready to get job---------");
-    axios.get('http://localhost:5000/api/job', {withCredentials: true})
-      .then(function (response) {
-
-        console.log("---------got response---------");
-        console.log(response.data.ret);
-        console.log("---------loading data---------");
-        this.setState({jobsData: response.data.ret});
-        console.log("---------finish loading data---------");
-      })
-      .catch(function (error) {
-
-      });
-  }
-*/
-
-  componentWillMount() {
-    axios.defaults.withCredentials = true;
-    axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
+    axios.get(`${BASE_URL}job`, {withCredentials: true}).then((response) => {
 
       this.setState({
         jobsData: response.data.ret
@@ -116,7 +96,7 @@ class PostedJobs extends Component {
     if(this.state.showModal) {
       jobmodal = <JobModal isShow={this.state.showModal} closeModal={this.closeModal} findPrev={this.findPrev} findNext={this.findNext} src={this.state.jobsData[this.state.selectedJobIndex]} > </JobModal>
     }
-    
+
     return (
       <div>
         <div className={JobsGalleryContainer}>

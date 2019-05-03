@@ -4,6 +4,7 @@ import { Dropdown, Menu} from 'semantic-ui-react';
 import "./Search.css";
 import axios from 'axios';
 import SearchResumeModal from '../PostedJobs/SearchResumeModal.jsx';
+import { BASE_URL} from '../../utils/prod';
 
 class Search extends Component {
 
@@ -57,7 +58,7 @@ class Search extends Component {
 
     //var joinedJobDescription = this.state.SelectedJob.description.join("");
     var obj = this;
-    axios.post('http://localhost:5000/api/search', {jobDescription: obj.state.SelectedJob.description}, {withCredentials: true})
+    axios.post(`${BASE_URL}search`, {jobDescription: obj.state.SelectedJob.description}, {withCredentials: true})
       .then(function (response) {
         console.log('user profiles');
         console.log(response);
@@ -90,7 +91,7 @@ class Search extends Component {
 
   componentDidMount() {
     axios.defaults.withCredentials = true;
-    axios.get('http://localhost:5000/api/job', {withCredentials: true}).then((response) => {
+    axios.get(`${BASE_URL}job`, {withCredentials: true}).then((response) => {
       //this.setState({SelectedJob: response.data.ret[0]});
       console.log('selectedjob desc: ' + response.data.ret[0].description);
       this.setState({
