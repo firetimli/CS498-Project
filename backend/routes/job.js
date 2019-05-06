@@ -135,6 +135,19 @@ module.exports = function (router) {
     console.log(job);
     console.log(user);
 
+    var update = {};
+    update['$inc'] = {};
+    update['$inc']['starredTimes'] = 1;
+
+    User.findByIdAndUpdate(user._id, update)
+    .then((result) => {
+      console.log('starred times +1');
+      console.log(result);
+      res.status(200).json({"message":'ok'});
+    }).catch((err) => {
+      console.log(err);
+    })
+
     var mongoose = require('mongoose');
     console.log(mongoose.Types.ObjectId(job._id));
 

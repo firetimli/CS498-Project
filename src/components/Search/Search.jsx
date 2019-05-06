@@ -28,8 +28,24 @@ class Search extends Component {
   };
 
   openResumeModal = (e) => {
+    var userIndex = e.target.value;
+    console.log('Viewing resume' + userIndex)
+
+    var opened_resume_userid = this.state.relevantUsers[userIndex]['_id']
+    console.log('opened resume user id' + opened_resume_userid);
+
+    axios.post(`${BASE_URL}open_resume`, {id: opened_resume_userid}, {withCredentials: true})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
     this.setState({ selectedResumeIndex: e.target.value, showModal: true });
     console.log(this.state.showModal)
+
+
   }
 
   closeResumeModal = (e) => {

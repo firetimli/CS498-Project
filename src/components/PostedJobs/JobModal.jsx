@@ -23,6 +23,20 @@ class JobModal extends Component {
 
   openResumeModal(e, index) {
     this.setState({ selectedResumeIndex: index, showModal: true });
+
+    var userIndex = index;
+    console.log('Viewing resume' + userIndex)
+
+    var opened_resume_userid = this.state.starredUsers[userIndex]['_id']
+    console.log('opened resume user id' + opened_resume_userid);
+
+    axios.post(`${BASE_URL}open_resume`, {id: opened_resume_userid}, {withCredentials: true})
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   }
 
   closeResumeModal(e) {

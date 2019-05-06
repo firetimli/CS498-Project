@@ -15,7 +15,9 @@ var UserSchema = mongoose.Schema({
   starredJobSeekers: [{type: String}],
   postedJobs: [{type: String}],
   resume_text: {type: String},
-  userType: {type: String}
+  userType: {type: String},
+  openedTimes:  {type: Number},
+  starredTimes:  {type: Number}
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

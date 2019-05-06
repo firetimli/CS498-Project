@@ -23,7 +23,9 @@ module.exports = function (router) {
         location: '',
         type: '',
         size: 0,
-        resume_text: ''
+        resume_text: '',
+        openedTimes: 0,
+        starredTimes: 0
       });
 
       User.createUser(newUser, function(err, user){

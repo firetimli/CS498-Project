@@ -4,6 +4,7 @@ var fs = require('fs');
 const pdf = require('pdf-parse');
 const axios = require('axios')
 const prod = require('../utils/prod')
+var mongoose = require('mongoose');
 
 module.exports = function (router) {
 
@@ -15,33 +16,68 @@ module.exports = function (router) {
       User.find({}).then((ret) => {
         var resumes = [];
         for(var i = 0; i < ret.length; i++) {
+          var resume_obj = {}
+          resume_obj.starredResumes = 0;
+          resume_obj.openedTimes = 0;
+          resume_obj.text = '';
+
           if(ret[i].resume_text) {
-            resumes.push(ret[i].resume_text);
+            resume_obj.text = ret[i].resume_text;
           }
-          else {
-            resumes.push('');
+
+          if(ret[i].openedTimes) {
+            resume_obj.openedTimes = ret[i].openedTimes;
           }
+
+          if(ret[i].starredResumes) {
+            resume_obj.starredResumes = ret[i].starredResumes;
+          }
+
+          resumes.push(resume_obj);
         }
 
-        var jobDescription = req.body.jobDescription;
-        console.log("jobDescription from frontend: " + jobDescription);
-        axios.post(`${prod.PY_SERVICE_BASE_URL}search`, {jobDescription:jobDescription, resumes:resumes}).then(function (response) {
-          console.log("response from python search service:");
-          console.log(response.data.data);
-          var indices = response.data.data;
-          relevantUsers = indices.map(i => ret[i])
+        User.count({}).then((result) => {
+          user_cnt = result;
+          var jobDescription = req.body.jobDescription;
+          console.log("jobDescription from frontend: " + jobDescription);
+          axios.post(`${prod.PY_SERVICE_BASE_URL}search`, {jobDescription:jobDescription, resumes:resumes, total_resumes:user_cnt}).then(function (response) {
+            console.log("response from python search service:");
+            console.log(response.data.data);
+            var indices = response.data.data;
+            relevantUsers = indices.map(i => ret[i])
 
-          res.status(200).json({"ret":relevantUsers});
-        }).catch (function (err) {
-            console.log(err);
+            res.status(200).json({"ret":relevantUsers});
+          }).catch (function (err) {
+              console.log(err);
+          });
+        }).catch((err) => {
+          console.log(err)
         });
-
       }).catch((err) => {
         console.log(err);
       });
 
       // Return the list of relevant user objects
     })
+
+  router.post('/open_resume', (req, res) => {
+    var update = {};
+    update['$inc'] = {};
+    update['$inc']['openedTimes'] = 1;
+
+    User.findByIdAndUpdate(req.body.id, update)
+    .then((result) => {
+      console.log('opened times +1');
+      console.log(result);
+      res.status(200).json({"message":'ok'});
+    }).catch((err) => {
+      console.log(err);
+    })
+  });
+
+  router.post('/star_resume', (req, res) => {
+
+  });
 
   router.post('/resume', (req, res) => {
     console.log('Got a resume request');
