@@ -23,9 +23,9 @@ def search():
     print(req)
     jobDescription = req['jobDescription']
     resumes = req['resumes']
-
+    resumes_size = req['total_resumes']
     # req.jobDescription, req.resumes
-    results = compareJDWithResumes(jobDescription, resumes)
+    results = compareJDWithResumes(jobDescription, resumes, resumes_size)
     indices = [r[2] for r in results]
     indices = indices[:5]
     #results = compareJDWithResumes(req.jobDescription, req.resumes)
@@ -47,12 +47,16 @@ def cosine_sim(text1, text2):
     tfidf = vectorizer.fit_transform([text1, text2])
     return ((tfidf * tfidf.T).A)[0,1]
 
-def compareJDWithResumes(jobDescription, resumes):
+def feedback(openedTimes,starredTimes,resumes_size):
+    return (starredTimes)/(openedTimes+resumes_size)
+
+def compareJDWithResumes(jobDescription, resumes, resumes_size):
     index = 0
     resumeList = []
+    alpha = 0.9
     for resume in resumes:
-        score = cosine_sim(jobDescription, resume)
-        resumeList.append((resume, score, index))
+        score = alpha * cosine_sim(jobDescription, resume['text']) + (1-alpha)*feedback(resume['openedTimes'],resume['starredTimes'],resumes_size)
+        resumeList.append((resume['text'], score, index))
         index += 1
     resumeList.sort(key=lambda x: x[1], reverse=True)
     return resumeList[0:10]

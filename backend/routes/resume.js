@@ -17,7 +17,7 @@ module.exports = function (router) {
         var resumes = [];
         for(var i = 0; i < ret.length; i++) {
           var resume_obj = {}
-          resume_obj.starredResumes = 0;
+          resume_obj.starredTimes = 0;
           resume_obj.openedTimes = 0;
           resume_obj.text = '';
 
@@ -29,8 +29,8 @@ module.exports = function (router) {
             resume_obj.openedTimes = ret[i].openedTimes;
           }
 
-          if(ret[i].starredResumes) {
-            resume_obj.starredResumes = ret[i].starredResumes;
+          if(ret[i].starredTimes) {
+            resume_obj.starredTimes = ret[i].starredTimes;
           }
 
           resumes.push(resume_obj);
